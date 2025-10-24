@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>class INFO</title>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <meta name='admaven-placement' content=Bqja7pjg5>
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="Term.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+    <link rel="stylesheet" href="slider.css">
+   
+</head>
+<body>
+    <div class="container">
+        <!-- dashbord page top bar-->
+        <div class="schoolbase" id="schoolbase">
+            <h3 id="schoolName">School Base</h3>
+            <h1>SCHOOL MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="contentBody">
+            <!---- Nav bar --------->
+            <nav class="navSide">
+                <ul id="navUl">
+                    <!---- from nav.js-->
+                </ul>
+            </nav>
+
+
+            <!----- Dash BOARD BODY ------>
+            <div class="dashOptions">
+
+                <div class="title">
+                    <h2><span id="studentName"></span> Second Term Result</h2>
+                </div>
+                
+                <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+                <div class="tableDiv">
+                    <div class="register-div">
+                        <p>Register subject</p>
+                         <div class="split-info">
+                            <div class="register-subject">
+                                <button class="animated-btn" id="regSubject">Register Subject</button>
+                            </div>
+                        </div>
+                        <div id="registerFormDiv" class="registerFormDiv">
+                            <code><p>NOTE: <i>After registering subject go back to previous page
+                                to see what you've added</i></p>
+                            </code>
+                            <button class="dismise" id="dismise"><h3>X</h3></button>
+                            <form id="registerSubjectForm">
+                                <div class="checkboxContainer" id="checkboxContainer">
+                                    <!----- SecondTerm.js code ------>
+                                </div>
+                                <input class="shiny-btn" type="submit" id="submitSubjects">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="slideInfo">
+                    <table id="student-secondTerm">
+                        <thead>
+                            
+                            <tr>
+                                <!-- <th>ID</th> -->
+                                <th>Subject</th>
+                                <th>CA 1</th>
+                                <th>CA 2</th>
+                                <th>CA 3</th>
+                                <!-- <th>CA 4</th> -->
+                                <th>CA Total</th>
+                                <th>Exam</th>
+                                <th>Grand Total</th>
+                                <th>Grade</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!------ code from classStudent.js ----->
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+                <div class="psychomotorForm" id="psychomotorForm">
+  <h3>Psychomotor Assessment</h3>
+  <!-- <label style="display: hidden;">Student Name:</label> -->
+  <input type="hidden" id="studentIdPsychomotor" readonly>
+  <input type="hidden" id="psychomotorSession" readonly>
+  <input type="hidden" id="psychomotorTerm" value="2" readonly>
+
+  <div class="psyCon">
+  <label>Handwriting (1–5):</label><br>
+  <input type="number" id="handwriting" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Fluency (1–5):</label><br>
+  <input type="number" id="fluency" min="1" max="5">
+  </div>
+
+   <div class="psyCon">
+  <label>Sports (1–5):</label><br>
+  <input type="number" id="sports" min="1" max="5">
+  </div>
+  
+  <div class="psyCon">
+  <label>Handling of tools Lab. & Working (1–5):</label><br>
+  <input type="number" id="handlingOfTools" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Drawing & Painting (1–5):</label><br>
+  <input type="number" id="drawing" min="1" max="5">
+  </div>
+  
+  <div class="psyCon">
+  <label>Crafts (1–5):</label><br>
+  <input type="number" id="crafts" min="1" max="5">
+  </div>
+
+for behaviour
+  <h3>Behaviour</h3>
+
+  <div class="psyCon">
+  <label>Punctuality (1–5):</label><br>
+  <input type="number" id="punctuality" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Attendance at Class (1–5):</label><br>
+  <input type="number" id="attendanceAtClass" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Reliability (1–5):</label><br>
+  <input type="number" id="reliability" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Honesty (1–5):</label><br>
+  <input type="number" id="honesty" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Relationship with Staff (1–5):</label><br>
+  <input type="number" id="relationshipWithStaff" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Relationship with other Students (1–5):</label><br>
+  <input type="number" id="relationshipWithOtherStudents" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Spirit of Co-operation (1–5):</label><br>
+  <input type="number" id="spiritOfCooperation" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Sense of Responsibility (1–5):</label><br>
+  <input type="number" id="senseOfResponsibility" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Attentiveness (1–5):</label><br>
+  <input type="number" id="attentiveness" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Organizational Ability (1–5):</label><br>
+  <input type="number" id="organizationalAbility" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Perseverance (1–5):</label><br>
+  <input type="number" id="perseverance" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Physical Dev (1–5):</label><br>
+  <input type="number" id="physicalDev" min="1" max="5">
+  </div>
+
+  <div class="psyCon">
+  <label>Self Control (1–5):</label><br>
+  <input type="number" id="selfControl" min="1" max="5">
+  </div>
+  
+  <button class="shiny-btn" id="savePsychomotor">Save Assessment</button>
+</div>
+    </div>
+    </div>
+    
+    <script type="module" src="secondTerm.js"></script>
+    <script src="nav.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

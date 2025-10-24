@@ -1,0 +1,126 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+.schooInfo{
+    display: flex;
+    margin-bottom: 20px;
+}
+
+h2{
+    color: rgb(98, 98, 201);
+}
+
+.firstTable td{
+    text-align: left;
+    letter-spacing: 1px;
+}
+
+.topTableClass{
+    width: 30%;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #000;
+    padding: 6px;
+    text-align: center;
+    font-size: 13px;
+}
+
+th {
+    background: #f2f2f2;
+}
+
+h2 {
+    text-align: center;
+}
+.header, .footer {
+    text-align: center;
+    margin-bottom: 10px;
+}
+.summary {
+    margin-top: 20px;
+    font-weight: bold;
+}
+#printBtn {
+    margin-top: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+}
+
+@media print {
+    .footer{
+        display: none
+    }
+}
+
+@media (max-width: 570px) {
+    body {
+    font-family: Arial, sans-serif;
+    margin: 6px;
+    }
+
+    .schooInfo{
+        display: flex;
+        margin-bottom: 16px;
+        margin-top: 15px;
+    }
+
+    #schoolNameDiv h1{
+        font-size: 23px;
+    }
+
+    h2{
+        color: rgb(98, 98, 201);
+    }
+    .firstTable td{
+        text-align: left;
+        letter-spacing: 1px;
+    }
+
+    .topTableClass{
+        width: 36%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    th, td {
+        border: 1px solid #000;
+        padding: 4px;
+        text-align: center;
+        font-size: 11px;
+    }
+
+    th {
+        background: #f2f2f2;
+    }
+
+    h2 {
+        text-align: center;
+    }
+    .header, .footer {
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .summary {
+        margin-top: 20px;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}

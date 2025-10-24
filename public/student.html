@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>classes Dashboard</title>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <meta name='admaven-placement' content=Bqja7pjg5>
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+</head>
+<body>
+    <div class="container">
+        <!-- dashbord page top bar-->
+        <div class="schoolbase" id="schoolbase">
+            <h3 id="schoolName">School Base</h3>
+            <h1>SCHOOL MANAGEMENT SYSTEM</h1>
+           
+        </div>
+
+        <div class="contentBody">
+            <!---- Nav bar --------->
+            <nav class="navSide">
+                <ul id="navUl" class="navUl">
+                    <!---- from nav.js-->
+                </ul>
+            </nav>
+
+            <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+
+            <!----- Dash BOARD BODY ------>
+            <div class="dashOptions">
+
+                <div class="title">
+                    <h2>STUDENT</h2>
+                </div>
+                <div class="classesDivs">
+                    <div class="addDiv">
+                        <button class="animated-btn" id="addStudent">ADD STUDENT</button>
+                        <div class="addForm" id="toggleFormAddForm">
+                            <button class="dismise" id="dismise"><h3>close</h3></button>
+                            <h2>INPUT STUDENT</h2>
+                            <p style="background: rgba(123, 225, 130, 0.473);">
+                                NOTE: After adding new students go back to session 
+                                and activate a session</p>
+                        <form id="formInput">
+                            <input type="text" id="firstNameInput" placeholder=" FIRST NAME">
+                            <input type="text" id="surNameInput" placeholder="SUR NAME">
+                            <input type="text" id="otherNameInput" placeholder="OTHER NAME">
+                            <input type="text" id="phoneNumberInput" placeholder="PARENT PHONE No.">
+                            <div class="selectDiv">
+                                <legend>GENDER:</legend>
+                            <select  id="selectGender">
+                                <option value="">GENDER</option>
+                                <option value="Male">MALE</option>
+                                <option value="Female">FEMALE</option>
+                            </select><br>
+                            <legend>SELECT CLASS:</legend>
+                            <select id="selectClass">
+                                <!---- from student.js ------>
+                            </select>
+                            </div>
+                            <input type="submit" value="SAVE">
+                        </form>
+                        </div>
+                    </div>
+                    <!-- EDIT STUDENT POPUP -->
+<!-- Overlay Background -->
+<div id="overlay" style="display:none;"></div>
+
+<!-- EDIT STUDENT POPUP -->
+<div class="editForm" id="editStudentForm" style="display:none;">
+    <div class="editContent">
+        <button class="dismise" id="closeEdit"><h3>×</h3></button>
+        <h2>EDIT STUDENT</h2>
+        <form id="formEditStudent">
+            <input type="hidden" id="editStudentId">
+
+            <label for="editFirstName">First Name:</label>
+            <input type="text" id="editFirstName" placeholder="FIRST NAME">
+            <label for="editSurName">Sur Name:</label>
+            <input type="text" id="editSurName" placeholder="SUR NAME">
+            <label for="editOtherName">Other Name:</label>
+            <input type="text" id="editOtherName" placeholder="OTHER NAME">
+            <label for="editPhoneNumber">Parent No:</label>
+            <input type="text" id="editPhoneNumber" placeholder="PARENT PHONE No.">
+
+            <div class="selectDiv">
+                <legend>GENDER:</legend>
+                <select id="editGender">
+                    <option value="Male">MALE</option>
+                    <option value="Female">FEMALE</option>
+                </select><br>
+
+                <legend>SELECT CLASS:</legend>
+                <select id="editClass">
+                    <!-- Will be loaded from DB -->
+                </select>
+            </div>
+
+            <input type="submit" value="UPDATE">
+        </form>
+    </div>
+</div>
+
+
+                     <table id="student-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>FIRST NAME</th>
+                                    <th>SUR NAME</th>
+                                    <th>OTHER NAME</th>
+                                    <!-- <th>PHONE No.</th> -->
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!---- subject.js table code-->
+                            </tbody>
+                        </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="module" src="showgem.js"></script>
+    <script type="module" src="student.js"></script>
+    <script src="nav.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

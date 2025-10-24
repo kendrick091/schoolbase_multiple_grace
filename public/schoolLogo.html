@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>School Info Upload</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+  <meta name='admaven-placement' content=Bqja7pjg5>
+  <link rel="stylesheet" href="schoolLogo.css">
+</head>
+<body>
+  <div class="container">
+    <button id="back-btn" class="btn">⬅ Back</button>
+    <h2>Upload School Info</h2>
+
+    <label for="schoolName">School Name:</label>
+    <input type="text" id="schoolName" placeholder="Enter school name" />
+
+    <label for="schoolAddress">School Address:</label>
+    <input type="text" id="schoolAddress" placeholder="Enter school address" />
+
+    <label for="logoInput">School Logo:</label>
+    <input type="file" id="logoInput" accept="image/*" />
+    <div class="preview">
+      <img id="logoPreview" alt="Logo Preview" style="display:none;" />
+    </div>
+
+    <label for="extraImageInput">Other Image:</label>
+    <input type="file" id="extraImageInput" accept="image/*" />
+    <div class="preview">
+      <img id="extraPreview" alt="Extra Image Preview" style="display:none;" />
+    </div>
+
+    <button id="saveButton" class="btn">💾 Save</button>
+
+    <hr />
+
+    <h3>Stored Info</h3>
+    <div class="stored-info">
+      <p><strong>Name:</strong> <span id="storedName"></span></p>
+      <p><strong>Address:</strong> <span id="storedAddress"></span></p>
+      <p><strong>Logo:</strong><br><img id="storedLogo" /></p>
+      <p><strong>Other Image:</strong><br><img id="storedExtraImage" /></p>
+    </div>
+  </div>
+
+  <script type="module" src="schoolLogo.js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+.optionSubject{
+    padding: 2px;
+}
+
+.information{
+    list-style: none;
+    width: 300px;
+}
+
+.information td{
+    padding: 3px;
+    font-size: 16px;
+    font-weight: bold;
+    /* background: rgba(89, 154, 180, 0.89); */
+    color: rgba(89, 154, 180, 0.89);
+}

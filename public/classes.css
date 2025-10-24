@@ -1,0 +1,138 @@
+.optionSubject{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+button{
+    padding: 4px 9px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.listClass{
+    margin-top: 20px;
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.listClass li{
+    width: 180px;
+    background: rgba(89, 154, 180, 0.89);
+    padding: 10px;
+    font-size: 23px;
+    font-weight: bold;
+    color: white;
+    border-radius: 13px;
+}
+.listClass button{
+    margin: 3px 0;
+    font-size: 12px;
+    border: none;
+    background: transparent;
+    padding: none;
+}
+
+.editDiv{
+    border: 1px solid rgba(89, 154, 180, 0.89);
+    background: rgba(89, 154, 180, 0.89);
+    border-radius: 20px;
+    padding: 17px;
+    position: absolute;
+    top: 30vh;
+    display: none;
+}
+
+.editForm input{
+    border: transparent;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* Overlay background */
+#overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+}
+
+/* Delete Class Popup */
+.deleteForm {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    z-index: 1000;
+    width: 350px;
+    max-width: 90%;
+}
+
+.deleteContent {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#deleteClassList {
+    list-style: none;
+    padding: 0;
+}
+
+#deleteClassList li {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 6px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+#deleteClassList li:hover {
+    background: #f8d7da;
+}
+
+
+@media (max-width: 570px){
+    button{
+    padding: 4px 9px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+    .listClass{
+    margin-top: 20px;
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.listClass li{
+    width: 170px;
+    background: rgba(89, 154, 180, 0.89);
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    border-radius: 13px;
+}
+.listClass button{
+    margin: 3px 0;
+    font-size: 12px;
+    border: none;
+    background: transparent;
+    padding: none;
+}
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classes</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <meta name='admaven-placement' content=Bqja7pjg5>
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="form.css">
+    <link rel="stylesheet" href="table.css">
+    <link rel="stylesheet" href="classes.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+</head>
+<body>
+    <div class="container">
+        <!-- dashbord page top bar-->
+        <div class="schoolbase" id="schoolbase">
+            <h3 id="schoolName">School Base</h3>
+            <h1>SCHOOL MANAGEMENT SYSTEM</h1>
+            
+        </div>
+
+        <div class="contentBody">
+            <!---- Nav bar --------->
+            <nav class="navSide">
+                <ul id="navUl">
+                    <!---- from nav.js-->
+                </ul>
+            </nav>
+
+            <!----- Dash BOARD BODY ------>
+            <div class="dashOptions">
+                <div class="title">
+                    <h2>CLASSES</h2>
+                </div>
+                <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+            
+                <div class="teachersDivs">
+    <div class="addDiv">
+        <button class="animated-btn" id="addClass">ADD CLASS</button>
+        <div class="addForm" id="toggleFormAddForm">
+            <button class="dismise" id="dismise"><h3>close</h3></button>
+            <h2>INPUT CLASS</h2>
+            <form id="formInput">
+                <input type="text" id="classInput" placeholder="ADD CLASS"><br>
+                <button type="submit">SAVE</button>
+            </form>
+        </div>
+
+        <!-- Delete Classes Button -->
+        <button class="animated-btn" id="deleteClassBtn" style="background:red; margin-top:10px;">DELETE CLASS</button>
+
+        <ul id="listClass" class="listClass">
+            <!---- from classes.js code--- -->
+        </ul>
+
+        <div id="editDiv" class="addForm">
+            <button class="dismise" id="dismiseEdit"><h3>close</h3></button>
+            <h2>Edit Class</h2>
+            <form class="editForm" id="editForm">
+                <input type="hidden" id="classId">
+                <label for="classEdit">Class: </label>
+                <input type="text" id="classEdit">
+                <input type="submit" value="SAVE">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Overlay -->
+<div id="overlay" style="display:none;"></div>
+
+<!-- Delete Class Popup -->
+<div class="deleteForm" id="deleteClassForm" style="display:none;">
+    <div class="deleteContent">
+        <button class="dismise" id="closeDelete"><h3>×</h3></button>
+        <h2>Select Class to Delete</h2>
+        <ul id="deleteClassList"></ul>
+    </div>
+</div>
+
+            </div>
+        </div>
+    </div>
+    <script type="module" src="showgem.js"></script>
+    <script type="module" src="classes.js"></script>
+    <script src="nav.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

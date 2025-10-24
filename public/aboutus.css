@@ -1,0 +1,145 @@
+/* ====== GENERAL STYLING ====== */
+body {
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    background: #f9fafc;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* Container */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+}
+
+/* Headings */
+h1, h2 {
+    text-align: center;
+    color: #2a4d8f;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 1.4rem;
+    margin-top: 40px;
+}
+
+/* ====== AUDIO PLAYER STYLING ====== */
+.aboutUs-mp3 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* ===== CUSTOM AUDIO PLAYER ===== */
+.custom-audio {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.custom-audio button {
+    background: #2a4d8f;
+    color: #fff;
+    border: none;
+    padding: 10px 25px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 600;
+}
+
+.custom-audio button:hover {
+    background: #1d3668;
+    transform: scale(1.05);
+}
+
+
+.audioInput {
+    margin-top: 15px;
+}
+
+.audioInput label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #444;
+}
+
+/* Range Slider */
+.audioInput input[type=range] {
+    width: 80%;
+    margin-top: 8px;
+    height: 5px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.audioInput input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #2a4d8f;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.privacyPolicy{
+    padding: 20px;
+    background: #b6b7b871;
+    font-size: 20px;
+}
+
+/* ====== YOUTUBE SECTION ====== */
+.youTubeVideoList {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.youTubeIframeDiv {
+    margin: 20px auto;
+    max-width: 100%;
+    max-width: 600px;   /* 👈 Limit width on wide screens */
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.youTubeIframeDiv iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ====== RESPONSIVENESS ====== */
+@media (max-width: 768px) {
+    .container {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+    }
+
+    h2 {
+        font-size: 1.2rem;
+    }
+
+    .audioInput input[type=range] {
+        width: 100%;
+    }
+}

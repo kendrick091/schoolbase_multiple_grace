@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Base</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+    <link rel="stylesheet" href="printableResult.css">
+</head>
+<body>
+  
+  <div class="container">
+    <div class="schoolInfo" id="schoolLogoDiv">
+    </div>
+    <div class="headTableDiv">
+      <!--- Top --- Tables ---->
+    <table>
+     <tbody id="studentTh"></tbody>
+    </table>
+    <table>
+      <tbody id="studentTh2"></tbody>
+    </table>
+    </div>
+
+    <table id="resultTable">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>CA1</th>
+        <th>CA2</th>
+        <th>CA3</th>
+        <th>Exam</th>
+        <th>Total</th>
+        <th>Grade</th>
+        <th>Remark</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    </table>
+
+    <div class="split" style="display: flex; justify-content: space-between;">
+    <table style="width: 35%;">
+      <tr id="totalScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+
+      <tr id="averageScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+      <tr id="gradeScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+    </table>
+    <div class="in-split">
+    <!-- <div id="termTitle"></div> -->
+    <p style="font-weight: bold; font-size: 12px; color: green;" id="vacationDateDisplay"></p>
+    <p style="font-weight: bold; font-size: 12px; color: blue;" id="resumptionDateDisplay"></p>
+    </div>
+    </div>
+    <div id="psychomotorDiv"></div>
+    <div>
+      <!-- <h4>Class Teacher's Comment: ____________________________________________
+         Sign: ___________</h4> -->
+      <!-- <h4>Head Teacher's Comment: 
+        ____________________________________________
+       Sign: ___________</h4> -->
+    </div>
+    <div class="summary" id="summary"></div>
+
+    <div class="printDiv">
+      <button id="printBtn" class="shiny-btn">PRINT RESULT</button>
+      <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+    </div>
+  </div>
+
+  <script type="module" src="printableResult.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

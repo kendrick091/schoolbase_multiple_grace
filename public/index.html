@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>school Base</title>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <link rel="manifest" href="manifest.json">
+    <meta name='admaven-placement' content=Bqja7pjg5>
+    <meta name="theme-color" content="#2196f3">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+   
+</head>
+<body>
+    <div class="container">
+        <!-- dashbord page top bar-->
+        <div class="schoolbase" id="schoolbase">
+            <h3 id="schoolName">School Base</h3>
+            <h1>FREE RESULT MANAGEMENT SYSTEM</h1>
+        </div>
+
+        <div class="contentBody">
+            <!---- Nav bar --------->
+            <nav class="navSide">
+                <ul id="navUl">
+                    <!---- from nav.js-->
+                </ul>
+            </nav>
+            <div id="offline-banner" style="
+            display: none;
+            background: #ff4d4d;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            font-size: 10px;
+            ">
+            🔌 You are on offline mode. Some features may be unavailable.
+            </div>
+
+            <!----- Dash BOARD BODY ------>
+            <div class="dashOptions">
+                <div class="title">
+                    <h2>FEES / MANAGMENT...</h2>
+                    <button id="install-btn" style="display:none; padding: 9px; background: green;
+                    color: white;">Install App</button>
+                    <button id="update-btn" style="display:none; padding: 9px; background: green;
+                    color: white;">Update App</button>
+
+                </div>
+                <div class="infoCards">
+                    <div class="infoCard" id="studentsAmount">Students <br> 
+                        <span id="totalCount"></span>
+                    </div>
+                    <!-- <div class="infoCard" id="teachersAmount">Teachers <br>
+                    <span></span>
+                </div> -->
+                    <div class="infoCard" id="boysAmount">Boys <br>
+                    <span id="boyCount"></span>
+                </div>
+                    <div class="infoCard" id="girlsAmount">Girls <br>
+                    <span id="girlCount"></span>
+                </div>
+                </div>
+                <div class="moreInfo" id="moreInfo">
+                    <div class="sessionShow" id="sessionShow">..
+                        <!------Show active session ----->
+                    </div>
+                    <!---- more info on the school ------>
+                </div>
+
+                <div class="space-between">
+                    <a href="schoolLogo.html"><button class="shiny-btn">School Info</button></a><br><br>
+                    
+                    <a href="session.html"><button class="shiny-btn">Academic Sessions</button></a><br><br>
+                
+                    <a href="result.html"><button class="shiny-btn">Result</button></a>
+                </div>
+
+                <div class="connectDevices">
+                        <a href="admin.html"><button class="shareAdminDataBtn red">Send Data to Teacher(s)</button></a>
+                        <a href="TeacherDevice.html"><button class="getDataBtn blue">Share Data</button></a>
+                        <br><a href="aboutus.html"><button class="getDataBtn blue">About US</button></a>
+                    </div>
+                    
+                <a href="https://wa.me/2349151003654" target="_blank" 
+                style="color: green;">
+                    <img width="20%" src="icons/whatsAppPng.png" alt="whatsAPP US"></a>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="install.js"></script>
+    <script type="module" src="showgem.js"></script>
+    <script type="module" src="index.js"></script>
+    <script src="nav.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>

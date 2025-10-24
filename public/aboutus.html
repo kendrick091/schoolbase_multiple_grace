@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <link rel="stylesheet" href="aboutus.css">
+    <meta name="google-adsense-account" content="ca-pub-3576699728102241">
+</head>
+<body>
+    <div class="aboutUs-mp3">
+  <!-- Hidden audio element -->
+  <audio id="click-sound">
+    <source src="icons/ai-audio.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- Custom audio controls -->
+  <div class="custom-audio">
+    <button id="playPauseBtn">▶ Play</button>
+  </div>
+
+  <!-- Volume slider -->
+  <div class="audioInput">
+    <label for="schoolbaseAudioVolum">Schoolbase Audio Volume</label><br>
+    <input id="schoolbaseAudioVolum" type="range" min="0" max="1" step="0.1" 
+           onchange="document.getElementById('click-sound').volume = this.value">
+  </div>
+  <div class="privacyPolicy">
+    <a href="privacy-policy.html">Privacy Policy</a>
+</div>
+
+</div>
+
+<!-- YouTube code Here -->
+       <div class="youTubeVideoList">
+        <h2>My YouTube Video</h2>
+
+        <div class="youTubeIframeDiv">
+        <!-- YouTube Embed -->
+        <iframe 
+            src="https://www.youtube.com/embed/yloy1Okfe9U" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+        </div>
+        <div class="youTubeIframeDiv">
+            <!-- YouTube Embed -->
+        <iframe 
+            src="https://www.youtube.com/embed/3KdGhMuetqc" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+        </div>
+
+        <div class="youTubeIframeDiv">
+            <!-- YouTube Embed -->
+        <iframe 
+            src="https://www.youtube.com/embed/XOTvCIkjoj0" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+        </div>
+       </div>
+    </div>
+    </div>
+
+
+    
+    <script src="aboutus.js"></script>
+</body>
+</html>

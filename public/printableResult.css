@@ -1,0 +1,149 @@
+body{
+  background: #e4e6e6;
+  display: flex;
+  justify-content: center;
+}
+.container{
+  padding: 20px;
+  width: 80%;
+  background: white;
+}
+
+.schoolInfo{
+  display: flex;
+  width: 100%;
+}
+
+.schoolInfo .logoHeader{
+  width: 15%;
+}
+
+.schoolInfo .centerHeader{
+  text-align: center;
+  width: 70%;
+}
+
+.headTableDiv{
+  display: flex;
+  justify-content: space-between;
+}
+
+.headTableDiv table{
+  width: 40%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+th, td {
+  border: 1px solid #000;
+  padding: 6px;
+  text-align: left;
+}
+th {
+  background-color: #f0f0f0;
+}
+
+.attendanceDIV{
+  width: 30%;
+}
+
+.printDiv{
+  padding: 5px;
+  width: 100%;
+}
+
+  @media print {
+    body {
+      margin: 0;
+      
+    }
+
+    .container {
+      padding: 3%;
+      margin-top: 5%;
+      width: 100%;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+      font-size: 13px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 3px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    h2, h3 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .printDiv{
+      display: none;
+    }
+
+  } 
+
+  @media screen {
+    #resultDiv {
+      padding: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+  }
+
+@media (max-width: 478px){
+  .container{
+  padding: 2px;
+  width: 100%;
+  background: white;
+}
+
+.headTableDiv{
+  display: flex;
+  justify-content: space-between;
+}
+
+.headTableDiv table{
+  width: 100%;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+th, td {
+  border: 1px solid #000;
+  padding: 6px;
+  text-align: left;
+  font-size: 10px;
+}
+th {
+  background-color: #f0f0f0;
+}
+}

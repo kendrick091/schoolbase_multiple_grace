@@ -1,0 +1,32 @@
+.promotionModal{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0; width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    align-items:center;
+    justify-content:center;
+}
+
+.promoteCard{
+    background:#fff;
+    padding:20px;
+    border-radius:8px;
+    width:300px;
+}
+
+.pStudentName{
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.dropDownSelect{
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+}
+
+.promoteBtn{
+    text-align:right;
+}

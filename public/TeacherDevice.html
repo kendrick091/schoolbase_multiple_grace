@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Device</title>
+     <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+    <meta name='admaven-placement' content=Bqja7pjg5>
+    <link rel="stylesheet" href="TeacherDevice.css">
+</head>
+<body>
+    <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+            
+  <h2>Teacher Page - Import Admin Data</h2>
+
+  <div class="ads-slot">
+                      <!-- ✅ In-Article Ad -->
+            <!-- <ins class="adsbygoogle"
+                style="display:block"
+                data-ad-format="fluid"
+                data-ad-layout-key="-fb+5w+4e-db+86"
+                data-ad-client="ca-pub-3576699728102241"
+                data-ad-slot="8170088575"></ins>
+            <script>
+                (adsbygoogle = window.adsbygoogle || []).push({});
+            </script> -->
+            </div>
+            
+    <!-- Import button -->
+     <div class="termShareDiv">
+     <div class="split" style="display: flex; justify-content: space-between;
+     width: 100%; max-width: 700px;">
+    <button style="background: red;" id="importBtn">Import Admin Data</button>
+    <input type="file" id="importFile" accept=".json" style="display:none;">
+    <a href="https://www.justbeamit.com">
+        <button style="background: green;">Send Data quickly</button>
+    </a>
+    </div>
+    </div>
+    <hr><br>
+
+     <div class="termShareDiv">
+        <!-- Attendance Buttons -->
+    <button id="exportAttendanceBtn">Export Attendance</button>
+    <input type="file" id="importAttendanceFile" style="display:none" />
+    <button id="importAttendanceBtn">Import Attendance</button>
+
+     </div>
+
+<div class="termShareDiv">
+    <!-- Teacher: only uses export button -->
+    <button id="exportBtn">Export First Term Data</button>
+
+    <!-- Admin: imports and merges -->
+    <input type="file" id="importFirstTermFile" style="display:none;">
+    <button id="importFirstTermBtn">Import & Merge First Term Data</button>
+</div>
+<div class="termShareDiv">
+    <!-- Teacher: only uses export button -->
+    <button id="exportBtn2">Export Second Term Data</button>
+
+    <!-- Admin: imports and merges -->
+    <input type="file" id="importsecondTermFile" style="display:none;">
+    <button id="importsecondTermBtn">Import & Merge Second Term Data</button>
+</div>
+<div class="termShareDiv">
+    <!-- Teacher: only uses export button -->
+    <button id="exportBtn3">Export Third Term Data</button>
+
+    <!-- Admin: imports and merges -->
+    <input type="file" id="importthirdTermFile" style="display:none;">
+    <button id="importthirdTermBtn">Import & Merge Third Term Data</button>
+</div>
+
+  <script type="module" src="attendanceShare.js"></script>
+  <script type="module" src="TeacherDevice.js"></script>
+  <script type="module" src="TeacherDeviceTerm2.js"></script>
+  <script type="module" src="TeacherDeviceTerm3.js"></script>
+</body>
+</html>

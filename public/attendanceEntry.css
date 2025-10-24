@@ -1,0 +1,75 @@
+.animated-btn {
+    padding: 12px 24px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.animated-btn:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+.animated-btn:active {
+    transform: scale(0.98);
+}
+
+.shiny-btn {
+    position: relative;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: white;
+    background-color: #111;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.shiny-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: conic-gradient(
+        from 0deg,
+        #ff0057,
+        #fffa00,
+        #00f0ff,
+        #ff0057
+    );
+    z-index: -1;
+    border-radius: 14px;
+    animation: rotateShine 2s linear infinite;
+    filter: blur(2px);
+}
+
+.shiny-btn::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    background-color: #111;
+    border-radius: 10px;
+    z-index: -1;
+}
+
+@keyframes rotateShine {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

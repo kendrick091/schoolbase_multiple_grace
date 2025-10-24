@@ -1,0 +1,32 @@
+.split-info{
+    display: flex;
+    justify-content: space-between;
+}
+
+.registerFormDiv{
+    border: 1px solid rgba(89, 154, 180, 0.89);
+    background: rgba(89, 154, 180, 0.89);
+    border-radius: 20px;
+    padding: 17px;
+    position: absolute;
+    top: 30vh;
+    display: none;
+}
+
+.checkboxContainer{
+    width: 200px;
+    font-size: 18px;
+}
+
+.checkboxContainer input[type="checkbox"]{
+    width: 10%;
+    padding: 10px 0;
+    margin: 10px 0;
+}
+
+.dismise{
+    color: white;
+    background: red;
+    padding: 7px;
+
+}

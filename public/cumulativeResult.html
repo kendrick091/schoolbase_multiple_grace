@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cumulative Result</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+  <meta name='admaven-placement' content=Bqja7pjg5>
+  <link rel="stylesheet" href="cumulativeResult.css">
+</head>
+<body>
+  <div class="container">
+  <div class="schooInfo">
+  <!-- School Header -->
+  <div id="schoolLogoDiv"></div>
+  <div id="schoolNameDiv"></div>
+  </div>
+
+  <h2>Cumulative Result Sheet</h2>
+
+  <!-- Student Info -->
+  <table class="firstTable">
+    <tbody id="studentInfo"></tbody>
+  </table>
+
+  <!-- Results Table -->
+  <table id="cumulativeTable">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>1st Term</th>
+        <th>2nd Term</th>
+        <th>3rd Term</th>
+        <th>Total</th>
+        <th>Average</th>
+        <th>Grade</th>
+        <th>Remark</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- Summary -->
+  <div id="cumulativeSummary" class="summary"></div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button id="printBtn">Print Result</button>
+     <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+  </div>
+
+  <script type="module" src="cumulativeResult.js"></script>
+</body>
+</html>

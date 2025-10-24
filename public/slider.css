@@ -1,0 +1,22 @@
+.slideInfo {
+  overflow-x: auto;     /* Enables horizontal scrolling */
+  overflow-y: hidden;   /* Prevents vertical scrollbar */
+  /*white-space: nowrap;  / Keeps table columns in a single line */
+  max-width: 100%;      /* Prevents it from exceeding parent width */
+  display: block;       /* Ensures overflow works correctly */
+  scrollbar-width: thin;        /* (Optional) for Firefox */
+  scrollbar-color: gray transparent; /* (Optional) for Firefox */
+}
+
+/* Optional: make the table slightly wider */
+.slideInfo table {
+  min-width: 500px; /* You can adjust this depending on how many columns you have */
+}
+
+/* Optional: improve table appearance */
+/* .slideInfo table th,
+.slideInfo table td {
+  padding: 6px 10px;
+  text-align: left;
+  white-space: nowrap; / Prevents breaking long text into multiple lines /
+} */
