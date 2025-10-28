@@ -1,3 +1,16 @@
+import {tog} from './toggle.js';
+
+let dismise = document.getElementById('dismise');
+const manualInputBtn = document.getElementById('manualInputBtn')
+
+manualInputBtn.addEventListener('click', ()=>{
+    tog(toggleFormAddForm)
+})
+
+dismise.addEventListener('click', function(){
+    tog(toggleFormAddForm)
+})
+
 import { DB_NAME, DB_VERSION } from "./app.js";
 
 let db;

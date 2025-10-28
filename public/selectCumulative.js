@@ -21,21 +21,16 @@ request.onsuccess = (event) => {
 
 // ================= Load Classes =================
 function loadClasses() {
-  if (!db.objectStoreNames.contains("classes")) {
-    console.error("❌ No 'classes' store found!");
-    return;
-  }
-
   const tx = db.transaction("classes", "readonly");
   const store = tx.objectStore("classes");
 
   store.openCursor().onsuccess = (e) => {
     const cursor = e.target.result;
     if (cursor) {
-      console.log("📌 Class record:", cursor.value);
+      const cls = cursor.value;
       const option = document.createElement("option");
-      option.value = cursor.value.id ?? cursor.value.classID;
-      option.textContent = cursor.value.className ?? cursor.value.name;
+      option.value = cls.id ?? cls.classID;
+      option.textContent = cls.className ?? cls.name;
       classSelect.appendChild(option);
       cursor.continue();
     }
@@ -44,36 +39,36 @@ function loadClasses() {
 
 // ================= Load Sessions =================
 function loadSessions() {
-  if (!db.objectStoreNames.contains("session")) {
-    console.error("❌ No 'session' store found!");
-    return;
-  }
-
   const tx = db.transaction("session", "readonly");
   const store = tx.objectStore("session");
 
   store.openCursor().onsuccess = (e) => {
     const cursor = e.target.result;
     if (cursor) {
-      console.log("📌 Session record:", cursor.value);
+      const sess = cursor.value;
       const option = document.createElement("option");
-      option.value = cursor.value.id ?? cursor.value.sessionID;
-      option.textContent = cursor.value.session ?? cursor.value.name;
+      option.value = sess.id ?? sess.sessionID;
+      option.textContent = sess.session ?? sess.name;
       sessionSelect.appendChild(option);
       cursor.continue();
     }
   };
 }
 
-// ================= When Class Selected → Load Students =================
-classSelect.addEventListener("change", () => {
+// ================= Load Students when both Class + Session Selected =================
+
+// Re-load students when class or session changes
+classSelect.addEventListener("change", loadStudents);
+sessionSelect.addEventListener("change", loadStudents);
+
+function loadStudents() {
   studentSelect.innerHTML = `<option value="">-- Select Student --</option>`;
 
   const selectedClassId = Number(classSelect.value);
-  if (!selectedClassId) return;
+  const selectedSessionId = Number(sessionSelect.value);
 
-  if (!db.objectStoreNames.contains("session_students")) {
-    console.error("❌ No 'session_students' store found!");
+  if (!selectedClassId || !selectedSessionId) {
+    console.warn("⚠️ Both class and session must be selected.");
     return;
   }
 
@@ -84,14 +79,14 @@ classSelect.addEventListener("change", () => {
     const cursor = event.target.result;
     if (cursor) {
       const rec = cursor.value;
-      if (rec.classID === selectedClassId) {
-        console.log("📌 Mapping record:", rec);
 
+      // ✅ Filter by both classID and sessionID
+      if (rec.classID === selectedClassId && rec.sessionID === selectedSessionId) {
         const studentTx = db.transaction("students", "readonly");
         const studentStore = studentTx.objectStore("students");
+
         studentStore.get(rec.studentID).onsuccess = (s) => {
           const student = s.target.result;
-          console.log("📌 Student record:", student);
           if (student) {
             const option = document.createElement("option");
             option.value = student.id ?? student.studentID;
@@ -103,7 +98,7 @@ classSelect.addEventListener("change", () => {
       cursor.continue();
     }
   };
-});
+}
 
 // ================= Redirect =================
 viewBtn.addEventListener("click", () => {

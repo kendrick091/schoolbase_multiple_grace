@@ -16,6 +16,7 @@
 </head>
   <link rel="stylesheet" href="attendance.css">
   <link rel="stylesheet" href="table.css">
+  <link rel="stylesheet" href="form.css">
   <meta name='admaven-placement' content=Bqja7pjg5>
   
     
@@ -23,6 +24,34 @@
   <button id="back-btn">
             ⬅ Back
             </button>
+            <button class="manualInput" id="manualInputBtn" 
+            style="background: rgb(43, 92, 28);">Update Attendance Manually</button>
+            <div class="addForm" id="toggleFormAddForm">
+            <button class="dismise" id="dismise"><h3>close</h3></button>
+            <h2>INPUT CLASS</h2>
+            <form id="formInput">
+              <label for="sessionID">Select Academic Session</label>
+              <select id="sessionID"></select>
+
+              <label for="term">Term</label>
+              <select id="term">
+                <option value="1">1st</option>
+                <option value="2">2nd</option>
+                <option value="3">3rd</option>
+              </select>
+
+              <label for="classID">Select Class</label>
+              <select id="classID"></select>
+
+              <label for="studentID">Select Student</label>
+              <select id="studentID"></select>
+
+                <input type="text" id="classInput" placeholder="Days present"><br>
+                <input type="text" id="classInput" placeholder="Days Absent"><br>
+                <input type="text" id="classInput" placeholder="Days School Opened"><br>
+                <button type="submit">SAVE</button>
+            </form>
+        </div>
   <h1>Class Attendance</h1>
 
   <div class="form-section">
@@ -62,5 +91,6 @@
   </table>
 
   <script type="module" src="attendance.js"></script>
+  <script type="module" src="attendanceManual.js"></script>
 </body>
 </html>
