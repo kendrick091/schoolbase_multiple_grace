@@ -22,33 +22,42 @@ request.onsuccess = (event)=>{
     className();
 }
 
-function displayInfo(){
+function displayInfo() {
     const transaction = db.transaction('students', 'readonly');
     const classStudents = transaction.objectStore('students');
 
     const table = document.querySelector('#student-table tbody');
     table.innerHTML = '';
 
-    let count = 0;
+    let students = [];
 
-    classStudents.openCursor().onsuccess = (event)=>{
+    classStudents.openCursor().onsuccess = (event) => {
         const cursor = event.target.result;
-        if(cursor){
-            const {id, firstName, surName, otherName, classID} = cursor.value;
-            if(userId == classID){
-                count++
+        if (cursor) {
+            const { id, firstName, surName, otherName, classID } = cursor.value;
+            if (userId == classID) {
+                students.push({ id, firstName, surName, otherName, classID });
+            }
+            cursor.continue();
+        } else {
+            // Sort students alphabetically by surName
+            students.sort((a, b) => a.surName.localeCompare(b.surName));
+
+            // Display sorted list
+            students.forEach(({ id, firstName, surName, otherName }) => {
                 const row = document.createElement('tr');
+
                 const cellId = document.createElement('td');
                 cellId.textContent = id;
                 row.appendChild(cellId);
 
-                const cellFirstName = document.createElement('td');
-                cellFirstName.textContent = firstName;
-                row.appendChild(cellFirstName);
-
                 const cellSurName = document.createElement('td');
                 cellSurName.textContent = surName;
                 row.appendChild(cellSurName);
+
+                const cellFirstName = document.createElement('td');
+                cellFirstName.textContent = firstName;
+                row.appendChild(cellFirstName);
 
                 const cellOtherName = document.createElement('td');
                 cellOtherName.textContent = otherName;
@@ -56,46 +65,45 @@ function displayInfo(){
 
                 const cellAction = document.createElement('td');
 
-                //1st term button code
+                // 1st term
                 const firstTerm = document.createElement('button');
                 firstTerm.textContent = '1st Term';
+                firstTerm.onclick = () => window.location.href = `selectSession.html?id=${id}&term=1`;
                 cellAction.appendChild(firstTerm);
-                firstTerm.onclick = function(){
-                    window.location.href = `selectSession.html?id=${id}&term=1`;
-                }
-                
-                //2nd term button code
+
+                // 2nd term
                 const secondTerm = document.createElement('button');
                 secondTerm.textContent = '2nd Term';
+                secondTerm.onclick = () => window.location.href = `selectSession.html?id=${id}&term=2`;
                 cellAction.appendChild(secondTerm);
-                secondTerm.onclick = function(){
-                    window.location.href = `selectSession.html?id=${id}&term=2`;
-                }
-                
-                //3rd term button code
+
+                // 3rd term
                 const thirdTerm = document.createElement('button');
                 thirdTerm.textContent = '3rd Term';
+                thirdTerm.onclick = () => window.location.href = `selectSession.html?id=${id}&term=3`;
                 cellAction.appendChild(thirdTerm);
-                thirdTerm.onclick = function(){
-                    window.location.href = `selectSession.html?id=${id}&term=3`;
-                }
-                
-                row.appendChild(cellAction) 
 
+                // Promote
+                const promoteBtn = document.createElement('button');
+                promoteBtn.textContent = 'Promote';
+                promoteBtn.onclick = () => openPromotionModal(id, `${firstName} ${surName}`);
+                cellAction.appendChild(promoteBtn);
+
+                row.appendChild(cellAction);
                 table.appendChild(row);
-            }
+            });
 
-            cursor.continue();
-        }else{
+            // Show total count
+            const amountDiv = document.getElementById('amountOfStudent');
+            amountDiv.innerHTML = ''; // Clear previous count if any
             const studentAmount = document.createElement('h2');
-                studentAmount.textContent = `${count} Student(s)`;
-                studentAmount.style.color = `rgba(89, 154, 180, 0.89)`;
-             document.getElementById('amountOfStudent').appendChild(studentAmount);
-                console.log(count)
+            studentAmount.textContent = `${students.length} Student(s)`;
+            studentAmount.style.color = 'rgba(89, 154, 180, 0.89)';
+            amountDiv.appendChild(studentAmount);
+
+            console.log(students.length);
         }
-
-    }
-
+    };
 }
 
 function className(){
