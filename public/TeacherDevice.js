@@ -101,18 +101,19 @@ window.addEventListener('DOMContentLoaded', () => {
   const importFirstTermFile = document.getElementById("importFirstTermFile");
   if (importFirstTermFile) {
     importFirstTermFile.addEventListener("change", async (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
-        console.log("File loaded for merge:", data);
-        importAndMergeFirstTerm(data);
-      } catch (err) {
-        alert("Invalid file format!");
-        console.error(err);
-      }
-    });
+  const file = e.target.files?.[0];
+  if (!file) return;
+  try {
+    const text = await file.text();
+    const data = JSON.parse(text);
+    console.log("File loaded for merge:", data);
+    importFirstTermData(data); // ✅ use correct function name
+  } catch (err) {
+    alert("Invalid file format!");
+    console.error("❌ Error parsing file:", err);
+  }
+});
+
     console.log("importFirstTermFile listener attached");
   } else {
     console.warn("importFirstTermFile not found in DOM");
@@ -165,39 +166,35 @@ window.addEventListener('DOMContentLoaded', () => {
 
   // --- export firstTerm + attendance -----------------------------------
   function exportFirstTermData() {
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onsuccess = event => {
-      const db = event.target.result;
-      const exportData = {};
-      let completed = 0;
+  const transaction = db.transaction('firstTerm', 'readonly');
+  const store = transaction.objectStore('firstTerm');
+  const request = store.getAll();
 
-      // build a filtered list of existing stores to avoid transaction issues
-      const existingStores = STORES.filter(s => db.objectStoreNames.contains(s));
-      if (existingStores.length === 0) {
-        alert("No stores available to export.");
-        return;
-      }
+  request.onsuccess = (event) => {
+    const data = event.target.result;
 
-      existingStores.forEach(storeName => {
-        const tx = db.transaction(storeName, "readonly");
-        const store = tx.objectStore(storeName);
-        const getAllReq = store.getAll();
-        getAllReq.onsuccess = () => {
-          exportData[storeName] = getAllReq.result || [];
-          if (++completed === existingStores.length) saveFile(exportData);
-        };
-        getAllReq.onerror = (e) => {
-          console.error("Error reading store", storeName, e);
-          exportData[storeName] = [];
-          if (++completed === existingStores.length) saveFile(exportData);
-        };
-      });
-    };
-    req.onerror = e => {
-      console.error("Error opening DB for export", e);
-      alert("Error opening database for export");
-    };
-  }
+    // Remove 'id' from each record before exporting
+    const exportData = data.map(({ id, ...rest }) => rest);
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], {
+      type: "application/json"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "firstTerm-export.json";
+    a.click();
+    URL.revokeObjectURL(url);
+
+    console.log(`✅ Exported ${exportData.length} records (without IDs).`);
+  };
+
+  request.onerror = () => {
+    console.error("❌ Failed to export data from firstTerm.");
+  };
+}
+
 
   function saveFile(data) {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
@@ -211,95 +208,38 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- import & merge firstTerm with conflict check ---------------------
-  function importAndMergeFirstTerm(data) {
-  if (!data || !Array.isArray(data.firstTerm)) {
-    alert("No firstTerm array found in the file.");
+ function importFirstTermData(data) {
+  const newRecords = Array.isArray(data) ? data : data.firstTerm;
+  if (!newRecords) {
+    alert("Invalid file: expected an array or { firstTerm: [...] }");
     return;
   }
 
-  const req = indexedDB.open(DB_NAME, DB_VERSION);
-  req.onsuccess = (e) => {
-    const db = e.target.result;
-    if (!db.objectStoreNames.contains("firstTerm")) {
-      alert("firstTerm store does not exist in DB.");
-      return;
+  const transaction = db.transaction('firstTerm', 'readwrite');
+  const store = transaction.objectStore('firstTerm');
+
+  let addedCount = 0;
+
+  newRecords.forEach(rec => {
+    // Remove any 'id' to avoid key conflicts
+    if ('id' in rec) delete rec.id;
+
+    try {
+      store.add(rec);
+      addedCount++;
+    } catch (err) {
+      console.warn("Skipping record due to add() error:", err);
     }
+  });
 
-    const tx = db.transaction("firstTerm", "readonly");
-    const store = tx.objectStore("firstTerm");
-    const getAllReq = store.getAll();
-
-    getAllReq.onsuccess = () => {
-      const existing = getAllReq.result || [];
-
-      // Build set of existing unique pairs "studentID|classID|sessionID|term"
-      const uniquePairs = new Set();
-      existing.forEach((rec) => {
-        const sid = readStudentId(rec);
-        const cid = readClassId(rec);
-        const sess = rec.sessionID ?? rec.session ?? null;
-        const term = rec.term ?? null;
-        if (sid && cid && sess && term) {
-          uniquePairs.add(`${cid}|${sid}|${sess}|${term}`);
-        }
-      });
-
-      let conflicts = 0;
-      const conflictPerClass = new Map();
-
-      // Normalize and filter records
-      const cleanedRecords = data.firstTerm.map((rec) => {
-        const sid = readStudentId(rec);
-        const cid = readClassId(rec);
-        const sess = rec.sessionID ?? rec.session ?? null;
-        const term = rec.term ?? null;
-
-        // strip teacher-supplied id
-        const { id, ...rest } = rec;
-
-        return { ...rest, studentID: sid, classID: cid, sessionID: sess, term };
-      }).filter((rec) => rec.studentID && rec.classID);
-
-      // Check for conflicts
-      cleanedRecords.forEach((rec) => {
-        const key = `${rec.classID}|${rec.studentID}|${rec.sessionID}|${rec.term}`;
-        if (uniquePairs.has(key)) {
-          conflicts++;
-          conflictPerClass.set(rec.classID, (conflictPerClass.get(rec.classID) || 0) + 1);
-        }
-      });
-
-      if (conflicts > 0) {
-        const parts = Array.from(conflictPerClass.entries())
-          .map(([cid, cnt]) => `classID=${cid}: ${cnt}`)
-          .join(", ");
-        alert(`❌ File has ${conflicts} conflicting student(s) already present — ${parts}`);
-        return;
-      }
-
-      // ✅ No conflicts → import
-      const writeTx = db.transaction("firstTerm", "readwrite");
-      const writeStore = writeTx.objectStore("firstTerm");
-
-      cleanedRecords.forEach((rec) => {
-        writeStore.add(rec); // let DB assign autoIncrement id
-      });
-
-      writeTx.oncomplete = () => {
-        alert("✅ First Term Data imported successfully!");
-      };
-      writeTx.onerror = (event) => {
-        console.error("Transaction error:", event.target.error || event);
-        alert("⚠️ Error while importing records, see console.");
-      };
-    };
+  transaction.oncomplete = () => {
+    alert(`✅ Imported ${addedCount} new record(s) successfully.`);
   };
-  
 
-  req.onerror = (err) => {
-    console.error("Error opening DB for merge", err);
-    alert("Error opening database for merge!");
+  transaction.onerror = (e) => {
+    console.error("❌ Error during import:", e);
+    alert("Error occurred while importing records.");
   };
 }
 
-}); // end DOMContentLoaded
+})

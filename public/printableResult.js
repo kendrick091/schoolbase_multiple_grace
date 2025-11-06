@@ -369,37 +369,51 @@ function calculateStudentPosition(studentId, sessionId, term, totalOverall, aver
       const studentRecord = allResults.find(r => r.studentID === studentId);
 
       // ✅ Display summary
-      const totalScore = document.getElementById('totalScore');
-      const averageScore = document.getElementById('averageScore');
-      const positionScore = document.getElementById('gradeScore');
+      // const totalScore = document.getElementById('totalScore');
+      // const averageScore = document.getElementById('averageScore');
+      // const positionScore = document.getElementById('gradeScore');
+      const resultPosition = document.getElementById('resultPosition');
 
-      totalScore.innerHTML = "";
-      averageScore.innerHTML = "";
-      positionScore.innerHTML = "";
+      // totalScore.innerHTML = "";
+      // averageScore.innerHTML = "";
+      // positionScore.innerHTML = "";
+      resultPosition.innerHTML = "";
 
-      const totalTd = document.createElement('td');
-      const totalTd2 = document.createElement('td');
-      totalTd.textContent = `Total Score`;
-      totalTd2.textContent = `${totalOverall}`;
-
-      const averageTd = document.createElement('td');
-      const averageTd2 = document.createElement('td');
-      averageTd.textContent = `Average`;
-      averageTd2.textContent = `${average}`;
-
-      const positionTd = document.createElement('td');
-      const positionTd2 = document.createElement('td');
-      positionTd.textContent = `Position`;
-      positionTd2.textContent = studentRecord
+      const positionInfo = document.createElement('div');
+      positionInfo.style.marginBottom = '15px';
+      positionInfo.innerHTML = `<h4>
+      <span style="margin-right: 40px;">Total Score: ${totalOverall}</span>
+       | <span style="margin-right: 40px;">Average: ${average}</span> 
+       | <span style="margin-right: 5px;">Position: ${studentRecord
         ? `${studentRecord.position}${getPositionSuffix(studentRecord.position)}`
-        : "N/A";
+        : "N/A"
+      } </span></h4>`;
+      resultPosition.appendChild(positionInfo);
 
-      totalScore.appendChild(totalTd);
-      totalScore.appendChild(totalTd2);
-      averageScore.appendChild(averageTd);
-      averageScore.appendChild(averageTd2);
-      positionScore.appendChild(positionTd);
-      positionScore.appendChild(positionTd2);
+      // const totalTd = document.createElement('td');
+      // const totalTd2 = document.createElement('td');
+      // totalTd.textContent = `Total Score`;
+      // totalTd2.textContent = `${totalOverall}`;
+
+      // const averageTd = document.createElement('td');
+      // const averageTd2 = document.createElement('td');
+      // averageTd.textContent = `Average`;
+      // averageTd2.textContent = `${average}`;
+
+      // const positionTd = document.createElement('td');
+      // const positionTd2 = document.createElement('td');
+      // positionTd.textContent = `Position`;
+      // positionTd2.textContent = studentRecord
+      //   ? `${studentRecord.position}${getPositionSuffix(studentRecord.position)}`
+      //   : "N/A";
+
+      // totalScore.appendChild(totalTd);
+      // totalScore.appendChild(totalTd2);
+      // averageScore.appendChild(averageTd);
+      // averageScore.appendChild(averageTd2);
+      // positionScore.appendChild(positionTd);
+      // positionScore.appendChild(positionTd2);
+      resultPosition.appendChild(positionInfo);
     }
   };
 }
@@ -472,11 +486,10 @@ document.getElementById('printBtn').addEventListener('click', ()=>{
 
 
 function getGrade(score) {
-  if(score >= 70) return "A";
-  if(score >= 60) return "B";
+  if(score >= 75) return "A";
+  if(score >= 65) return "B";
   if(score >= 50) return "C";
-  if(score >= 45) return "D";
-  if(score >= 40) return "E";
+  if(score >= 40) return "D";
   return "F";
 }
 
@@ -512,7 +525,7 @@ function loadPsychomotor() {
     const b = data.behaviour[0];
 
     const psychomotorHTML = `
-      <h4>Psychomotor & Behaviour Assessment</h4>
+      <h5>Psychomotor & Behaviour Assessment</h5>
       <div class="print-page-break">
       <table>
         <thead>
@@ -557,9 +570,7 @@ function loadPsychomotor() {
           <td>Attentiveness</td><td>${b.attentiveness ?? "-"}</td>
           <td>Organizational Ability</td><td>${b.organizationalAbility ?? "-"}</td>
           <td>Perseverance</td><td>${b.perseverance ?? "-"}</td>
-          <td>Physical Development</td><td>${b.physicalDev ?? "-"}</td>
-          </tr>
-          <tr>
+          <!---- <td>Physical Development</td><td>${b.physicalDev ?? "-"}</td> ------>
           <td>Self Control</td><td>${b.selfControl ?? "-"}</td>
           </tr>
           </tbod>

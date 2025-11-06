@@ -189,147 +189,130 @@ async function displayTable() {
     return;
   }
 
-  const transaction = db.transaction("firstTerm", "readonly");
+  const transaction = db.transaction(["firstTerm", "subjectStore"], "readonly");
   const firstTermStore = transaction.objectStore("firstTerm");
+  const subjectStore = transaction.objectStore("subjectStore");
 
   const tbody = document.querySelector("#student-firstTerm tbody");
   tbody.innerHTML = "";
 
-  firstTermStore.openCursor().onsuccess = (event) => {
-    const cursor = event.target.result;
-    if (!cursor) return;
+  const allRecords = [];
 
-    const record = cursor.value;
-
-    if (toInt(record.studentID) === toInt(userId) && toInt(record.session) === toInt(sessionID)) {
-      const row = document.createElement("tr");
-
-      const subjectCell = document.createElement("td");
-      row.appendChild(subjectCell);
-
-      const subjectTx = db.transaction("subjectStore", "readonly");
-      const subjectStore = subjectTx.objectStore("subjectStore");
-      const subjectReq = subjectStore.get(toInt(record.subjectID));
-      subjectReq.onsuccess = () => {
-        const subject = subjectReq.result;
-        subjectCell.textContent = subject ? subject.subjects : "Unknown subject";
-      };
-
-      const makeNumberInputCell = (value = 0) => {
-        const td = document.createElement("td");
-        const input = document.createElement("input");
-        input.type = "number";
-        input.min = "0";
-        input.value = toInt(value);
-        input.style.width = "4rem";
-        td.appendChild(input);
-        return { td, input };
-      };
-
-      const ca1 = makeNumberInputCell(record.ca1);
-      const ca2 = makeNumberInputCell(record.ca2);
-      const ca3 = makeNumberInputCell(record.ca3);
-
-      row.appendChild(ca1.td);
-      row.appendChild(ca2.td);
-      row.appendChild(ca3.td);
-
-      const caSumCell = document.createElement("td");
-      const calcCA = () => toInt(ca1.input.value) + toInt(ca2.input.value) + toInt(ca3.input.value);
-      caSumCell.textContent = calcCA();
-      caSumCell.style.fontWeight = "bold";
-      row.appendChild(caSumCell);
-
-      const exam = makeNumberInputCell(record.exam);
-      row.appendChild(exam.td);
-
-      const grandTotalCell = document.createElement("td");
-      const calcGrand = () => calcCA() + toInt(exam.input.value);
-      grandTotalCell.textContent = calcGrand();
-      grandTotalCell.style.fontWeight = "bold";
-      row.appendChild(grandTotalCell);
-
-      const gradeCell = document.createElement("td");
-      gradeCell.textContent = getGrade(calcGrand());
-      row.appendChild(gradeCell);
-
-      [ca1.input, ca2.input, ca3.input, exam.input].forEach((inp) =>
-        inp.addEventListener("input", () => {
-          caSumCell.textContent = calcCA();
-          grandTotalCell.textContent = calcGrand();
-          gradeCell.textContent = getGrade(calcGrand());
-        })
-      );
-
-      // Actions
-      const action = document.createElement("td");
-
-      // EDIT (save directly, no recharge)
-      const editBtn = document.createElement("button");
-      editBtn.textContent = "Save";
-      editBtn.addEventListener("click", async () => {
-        if (!sessionID) {
-          alert("No session registered! Please activate a session.");
-          return;
+  // Collect all student records first
+  await new Promise((resolve) => {
+    firstTermStore.openCursor().onsuccess = (event) => {
+      const cursor = event.target.result;
+      if (cursor) {
+        const record = cursor.value;
+        if (toInt(record.studentID) === toInt(userId) && toInt(record.session) === toInt(sessionID)) {
+          allRecords.push(record);
         }
+        cursor.continue();
+      } else {
+        resolve();
+      }
+    };
+  });
 
-        const updateFirstTerm = {
-          id: toInt(record.id),
-          studentID: toInt(userId),
-          subjectID: toInt(record.subjectID),
-          classID: toInt(record.classID),
-          ca1: toInt(ca1.input.value),
-          ca2: toInt(ca2.input.value),
-          ca3: toInt(ca3.input.value),
-          exam: toInt(exam.input.value),
-          session: toInt(sessionID),
-        };
+  // Attach subject names to records
+  for (const rec of allRecords) {
+    const subReq = subjectStore.get(toInt(rec.subjectID));
+    await new Promise((res) => {
+      subReq.onsuccess = () => {
+        rec.subjectName = subReq.result ? subReq.result.subjects : "Unknown subject";
+        res();
+      };
+      subReq.onerror = () => res();
+    });
+  }
 
-        const uTx = db.transaction("firstTerm", "readwrite");
-        const firstTerm = uTx.objectStore("firstTerm");
-        const putReq = firstTerm.put(updateFirstTerm);
+  // Sort alphabetically by subjectName
+  allRecords.sort((a, b) => (a.subjectName || "").localeCompare(b.subjectName || ""));
 
-        putReq.onsuccess = async () => {
-          await displayTable();
-        };
-        putReq.onerror = () => {
-          alert("Error updating score.");
-        };
-      });
-      action.appendChild(editBtn);
+  // Render table rows
+  allRecords.forEach((record) => {
+    const row = document.createElement("tr");
 
-      // DELETE (no gem deduction)
-const deleteBtn = document.createElement("button");
-deleteBtn.textContent = "Delete";
-deleteBtn.style.background = "red";
-deleteBtn.style.border = "none";
+    const subjectCell = document.createElement("td");
+    subjectCell.textContent = record.subjectName;
+    row.appendChild(subjectCell);
 
-deleteBtn.addEventListener("click", async () => {
-  const confirmDelete = confirm("Are you sure you want to delete this subject?");
-  if (!confirmDelete) return; // stop if user clicks Cancel
+    const makeNumberInputCell = (value = 0) => {
+      const td = document.createElement("td");
+      const input = document.createElement("input");
+      input.type = "number";
+      input.min = "0";
+      input.value = toInt(value);
+      input.style.width = "4rem";
+      td.appendChild(input);
+      return { td, input };
+    };
 
-  const dTx = db.transaction("firstTerm", "readwrite");
-  const ft = dTx.objectStore("firstTerm");
-  const delReq = ft.delete(toInt(record.id));
+    const ca1 = makeNumberInputCell(record.ca1);
+    const ca2 = makeNumberInputCell(record.ca2);
+    const ca3 = makeNumberInputCell(record.ca3);
+    const exam = makeNumberInputCell(record.exam);
 
-  delReq.onsuccess = async () => {
-    alert("Subject Deleted!");
-    await displayTable();
-  };
+    row.appendChild(ca1.td);
+    row.appendChild(ca2.td);
+    row.appendChild(ca3.td);
 
-  delReq.onerror = () => {
-    console.error("Subject delete error");
-  };
-});
+    const caSumCell = document.createElement("td");
+    const calcCA = () => toInt(ca1.input.value) + toInt(ca2.input.value) + toInt(ca3.input.value);
+    caSumCell.textContent = calcCA();
+    caSumCell.style.fontWeight = "bold";
+    row.appendChild(caSumCell);
 
-action.appendChild(deleteBtn);
+    row.appendChild(exam.td);
 
-      row.appendChild(action);
-      tbody.appendChild(row);
-    }
+    const grandTotalCell = document.createElement("td");
+    const calcGrand = () => calcCA() + toInt(exam.input.value);
+    grandTotalCell.textContent = calcGrand();
+    grandTotalCell.style.fontWeight = "bold";
+    row.appendChild(grandTotalCell);
 
-    cursor.continue();
-  };
+    const gradeCell = document.createElement("td");
+    gradeCell.textContent = getGrade(calcGrand());
+    row.appendChild(gradeCell);
+
+    [ca1.input, ca2.input, ca3.input, exam.input].forEach((inp) =>
+      inp.addEventListener("input", () => {
+        caSumCell.textContent = calcCA();
+        grandTotalCell.textContent = calcGrand();
+        gradeCell.textContent = getGrade(calcGrand());
+      })
+    );
+
+    // Delete button
+    const action = document.createElement("td");
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.style.background = "red";
+    deleteBtn.style.border = "none";
+
+    deleteBtn.addEventListener("click", async () => {
+      const confirmDelete = confirm("Are you sure you want to delete this subject?");
+      if (!confirmDelete) return;
+
+      const dTx = db.transaction("firstTerm", "readwrite");
+      const ft = dTx.objectStore("firstTerm");
+      const delReq = ft.delete(toInt(record.id));
+
+      delReq.onsuccess = async () => {
+        alert("Subject Deleted!");
+        await displayTable();
+      };
+
+      delReq.onerror = () => {
+        console.error("Subject delete error");
+      };
+    });
+
+    action.appendChild(deleteBtn);
+    row.appendChild(action);
+
+    tbody.appendChild(row);
+  });
 }
 
 
