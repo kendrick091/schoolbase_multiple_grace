@@ -94,6 +94,16 @@ th {
 
   } 
 
+  /* for psychomotor tables */
+  .psychomotor-tables{
+    margin: 0;
+    display: flex;
+  }
+
+  .psychomotor-tables tr td, .psychomotor-tables tr th{
+    font-size: 10px;
+  }
+
   @media screen {
     #resultDiv {
       padding: 20px;

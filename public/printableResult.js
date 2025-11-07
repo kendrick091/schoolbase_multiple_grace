@@ -512,9 +512,10 @@ function loadPsychomotor() {
 
   request.onsuccess = (event) => {
     const data = event.target.result;
+    const div = document.getElementById("psychomotorDiv");
+
     if (!data) {
-      console.log("No psychomotor record found for this student/term.");
-      document.getElementById("psychomotorDiv").innerHTML = `
+      div.innerHTML = `
         <h3>Psychomotor & Behaviour</h3>
         <p>No psychomotor record available for this term.</p>
       `;
@@ -524,65 +525,77 @@ function loadPsychomotor() {
     const a = data.assessment[0];
     const b = data.behaviour[0];
 
+    // Helper to generate a check row with rating 1–5
+    const makeRow = (label, value) => {
+      const v = Number(value) || 0;
+      let cells = "";
+      for (let i = 1; i <= 5; i++) {
+        cells += `<td style="text-align:center;">${i === v ? "✔" : ""}</td>`;
+      }
+      return `<tr><td>${label}</td>${cells}</tr>`;
+    };
+
     const psychomotorHTML = `
       <h5>Psychomotor & Behaviour Assessment</h5>
-      <div class="print-page-break">
-      <table>
-        <thead>
-          <tr>
-            <th colspan="2">Psychomotor Skills</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-          <td>Handwriting</td><td>${a.handwriting ?? "-"}</td>
-          <td>Fluency</td><td>${a.fluency ?? "-"}</td>
-          <td>Sports</td><td>${a.sports ?? "-"}</td>
-          <td>Handling of Tools</td><td>${a.handlingOfTools ?? "-"}</td>
-          </tr>
-          <tr>
-          <td>Drawing & Painting</td><td>${a.drawing ?? "-"}</td>
-          <td>Crafts</td><td>${a.crafts ?? "-"}</td>
-          </tr>
-          </tbody>
-          </table>
-
-          <table>
+      <div class="psychomotor-tables">
+        <table border="1" cellspacing="0" cellpadding="4" width="100%">
           <thead>
-          <tr>
-            <th colspan="2" padding:4px;">Behavioural Traits</th>
-          </tr>
+            <tr>
+              <th>Psychomotor Skills</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+            </tr>
           </thead>
           <tbody>
-          <tr>
-          <td>Punctuality</td><td>${b.punctuality ?? "-"}</td>
-          <td>Attendance at Class</td><td>${b.attendanceAtClass ?? "-"}</td>
-          <td>Reliability</td><td>${b.reliability ?? "-"}</td>
-          <td>Honesty</td><td>${b.honesty ?? "-"}</td>
-          </tr>
-          <tr>
-          <td>Relationship with Staff</td><td>${b.relationshipWithStaff ?? "-"}</td>
-          <td>Relationship with Other Students</td><td>${b.relationshipWithOtherStudents ?? "-"}</td>
-          <td>Spirit of Cooperation</td><td>${b.spiritOfCooperation ?? "-"}</td>
-          <td>Sense of Responsibility</td><td>${b.senseOfResponsibility ?? "-"}</td>
-          </tr>
-          <tr>
-          <td>Attentiveness</td><td>${b.attentiveness ?? "-"}</td>
-          <td>Organizational Ability</td><td>${b.organizationalAbility ?? "-"}</td>
-          <td>Perseverance</td><td>${b.perseverance ?? "-"}</td>
-          <!---- <td>Physical Development</td><td>${b.physicalDev ?? "-"}</td> ------>
-          <td>Self Control</td><td>${b.selfControl ?? "-"}</td>
-          </tr>
-          </tbod>
-          </table>
+            ${makeRow("Handwriting", a.handwriting)}
+            ${makeRow("Fluency", a.fluency)}
+            ${makeRow("Sports", a.sports)}
+            ${makeRow("Handling of Tools", a.handlingOfTools)}
+            ${makeRow("Drawing & Painting", a.drawing)}
+            ${makeRow("Crafts", a.crafts)}
+          </tbody>
+        </table>
+
+        <table border="1" cellspacing="0" cellpadding="4" width="100%">
+          <thead>
+            <tr>
+              <th>Behavioural Traits</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${makeRow("Punctuality", b.punctuality)}
+            ${makeRow("Attendance at Class", b.attendanceAtClass)}
+            ${makeRow("Reliability", b.reliability)}
+            ${makeRow("Honesty", b.honesty)}
+            ${makeRow("Relationship with Staff", b.relationshipWithStaff)}
+            ${makeRow("Relationship with Other Students", b.relationshipWithOtherStudents)}
+          </tbody>
+        </table>
+        <table border="1" cellspacing="0" cellpadding="4" width="100%">
+          <thead>
+            <tr>
+              <th>Behavioural Traits</th>
+              <th>1</th><th>2</th><th>3</th><th>4</th><th>5</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${makeRow("Spirit of Cooperation", b.spiritOfCooperation)}
+            ${makeRow("Sense of Responsibility", b.senseOfResponsibility)}
+            ${makeRow("Attentiveness", b.attentiveness)}
+            ${makeRow("Organizational Ability", b.organizationalAbility)}
+            ${makeRow("Perseverance", b.perseverance)}
+            ${makeRow("Self Control", b.selfControl)}
+          </tbody>
+        </table>
       </div>
     `;
 
-    document.getElementById("psychomotorDiv").innerHTML = psychomotorHTML;
+    div.innerHTML = psychomotorHTML;
   };
 
   request.onerror = () => {
     console.error("Error loading psychomotor data.");
   };
 }
+
 
