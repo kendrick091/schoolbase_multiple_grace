@@ -40,8 +40,10 @@ function openDataBase(){
         // }
         //Psychomotor store
         if(!db.objectStoreNames.contains('psychomotor')){
-            const psychomotorStore = db.createObjectStore('psychomotor', {keyPath: 'id', autoIncrement: true});
-            psychomotorStore.createIndex("psychomotor_session_term", ["sessionID", "studentID", "classID", 'term'], {unique: false})
+            const psychomotorStore = db.createObjectStore
+            ('psychomotor', {keyPath: 'id', autoIncrement: true});
+            psychomotorStore.createIndex("psychomotor_session_term", 
+              ["sessionID", "studentID", "classID", 'term'], {unique: false})
         }
 
         //Session Viewer store
