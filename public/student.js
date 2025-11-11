@@ -42,7 +42,7 @@ document.getElementById("formInput").addEventListener("submit", function (e) {
 
     const firstNameInput = document.getElementById('firstNameInput').value;
     const surNameInput = document.getElementById('surNameInput').value;
-    const otherNameInput = document.getElementById('otherNameInput').value;
+    // const otherNameInput = document.getElementById('otherNameInput').value;
     const phoneNumberInput = document.getElementById('phoneNumberInput').value;
     const selectGender = document.getElementById('selectGender').value;
     const selectClass = parseInt(document.getElementById('selectClass').value);
@@ -56,7 +56,7 @@ document.getElementById("formInput").addEventListener("submit", function (e) {
         const data = {
             firstName: firstNameInput,
             surName: surNameInput,
-            otherName: otherNameInput,
+            // otherName: otherNameInput,
             phoneNumber: phoneNumberInput,
             gender: selectGender,
             classID: selectClass,
@@ -109,7 +109,7 @@ function displayData() {
         const students = studentRequest.result;
 
         // Sort alphabetically by firstName
-        students.sort((a, b) => a.firstName.localeCompare(b.firstName));
+        students.sort((a, b) => a.surName.localeCompare(b.surName));
 
         let StudentTable = document.querySelector('#student-table tbody');
         StudentTable.innerHTML = '';
@@ -121,20 +121,22 @@ function displayData() {
             cellID.textContent = student.id;
             row.appendChild(cellID);
 
-            // First Name
-            const cellFirstName = document.createElement('td');
-            cellFirstName.textContent = student.firstName;
-            row.appendChild(cellFirstName);
-
             // Sur Name
             const cellSurName = document.createElement('td');
             cellSurName.textContent = student.surName;
             row.appendChild(cellSurName);
 
+            // First Name
+            const cellFirstName = document.createElement('td');
+            cellFirstName.textContent = student.firstName;
+            row.appendChild(cellFirstName);
+
+            
+
             // Other Name
-            const cellOtherName = document.createElement('td');
-            cellOtherName.textContent = student.otherName;
-            row.appendChild(cellOtherName);
+            // const cellOtherName = document.createElement('td');
+            // cellOtherName.textContent = student.otherName;
+            // row.appendChild(cellOtherName);
 
             // Phone
             // const cellPhoneNumber = document.createElement('td');

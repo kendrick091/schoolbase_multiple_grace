@@ -20,7 +20,7 @@ let cumulativeBtn = document.createElement('button')
 
 feesListBtn.textContent = 'FEES/Management';
 // myButton.classList.add("animated-btn"); // Add a class
-teacherListBtn.textContent = 'TEACHERS';
+teacherListBtn.textContent = 'REMARKS';
 studentListBtn.textContent = 'STUDENTS';
 subjectListBtn.textContent = 'SUBJECTS';
 classesListBtn.textContent = 'CLASSES';
@@ -46,7 +46,7 @@ classesListBtn.addEventListener('click', function(){
 })
 
 teacherListBtn.addEventListener('click', function(){
-    window.location.href = `teacher.html`;
+    window.location.href = `teacherRemark.html`;
 })
 
 studentListBtn.addEventListener('click', function(){
@@ -72,9 +72,9 @@ cumulativeBtn.addEventListener('click', function(){
 navUl.appendChild(feesList);
 navUl.appendChild(classesList)
 navUl.appendChild(teacherList)
+navUl.appendChild(attendanceList)
 navUl.appendChild(subjectList)
 navUl.appendChild(studentList)
-navUl.appendChild(attendanceList)
 navUl.appendChild(resultList)
 navUl.appendChild(cumulativeResult)
 

@@ -1,5 +1,5 @@
 export const DB_NAME = "Multiple_Grace_Base";
-export const DB_VERSION = 3;
+export const DB_VERSION = 4;
 
 let db;
 
@@ -49,6 +49,10 @@ function openDataBase(){
         //Session Viewer store
         if(!db.objectStoreNames.contains('sessionViewer')){
           const sessionViewer = db.createObjectStore('sessionViewer', {keyPath: 'id', autoIncrement: false})
+        }
+        //remark store
+        if(!db.objectStoreNames.contains('remark')){
+          const remarkStore = db.createObjectStore('remark', {keyPath: 'id', autoIncrement: true})
         }
 
         //Class store
