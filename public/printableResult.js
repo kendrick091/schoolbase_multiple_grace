@@ -20,8 +20,10 @@ request.onsuccess = (event) => {
   loadResult();
   // loadAttendance();
   loadPsychomotor();
+  remarkDisplay();
   // loadAttendanceToStudentTh2()
   loadTermInfo()
+
 };
 
 //School logo
@@ -482,6 +484,23 @@ function getPositionSuffix(pos) {
 document.getElementById('printBtn').addEventListener('click', ()=>{
   window.print();
 })
+
+function remarkDisplay(){
+  const tx = db.transaction('remark', 'readonly');
+  const store = tx.objectStore('remark');
+
+  const secretKey = `${String(studentId)}_${String(sessionId)}_${String(term)}`;
+
+  const getStudentRemark = store.get(secretKey);
+
+  getStudentRemark.onsuccess = () =>{
+    const cursor = getStudentRemark.result;
+
+    document.getElementById('remarkfromDB')
+    .textContent = `${cursor.remark}`
+  }
+
+}
 
 
 

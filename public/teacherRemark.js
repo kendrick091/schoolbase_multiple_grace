@@ -99,25 +99,29 @@ function loadStudentsByClass() {
 }
 
 
+
+
 // ==================== Save Teacher Remark ====================
 document.getElementById("saveRemark").addEventListener("click", saveTeacherRemark);
 
 function saveTeacherRemark() {
+    const termSelect = document.getElementById('termSelect').value;
   const studentId = document.getElementById("studentSelect").value;
   const remarkText = document.getElementById("teacherRemark").value.trim();
 
-  if (!studentId || !remarkText) {
+  if (!studentId || !remarkText || !termSelect) {
     alert("⚠️ Please select a student and enter a remark.");
     return;
   }
 
-  const recordKey = `${studentId}_${currentSessionID}`;
+  const recordKey = `${studentId}_${currentSessionID}_${termSelect}`;
   const tx = db.transaction("remark", "readwrite");
   const store = tx.objectStore("remark");
 
   const remarkRecord = {
     id: recordKey,
     studentID: Number(studentId),
+    term: Number(termSelect),
     session: currentSessionID,
     remark: remarkText,
     date: new Date().toISOString(),
@@ -134,9 +138,10 @@ document.getElementById("studentSelect").addEventListener("change", loadExisting
 
 function loadExistingRemark() {
   const studentId = document.getElementById("studentSelect").value;
-  if (!studentId || !currentSessionID) return;
+  const termSelect = document.getElementById('termSelect').value;
+  if (!studentId || !currentSessionID || !termSelect) return;
 
-  const recordKey = `${studentId}_${currentSessionID}`;
+  const recordKey = `${studentId}_${currentSessionID}_${termSelect}`;
   const tx = db.transaction("remark", "readonly");
   const store = tx.objectStore("remark");
   const req = store.get(recordKey);
