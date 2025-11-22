@@ -67,14 +67,14 @@ function loadStudentsByClass() {
   store.openCursor().onsuccess = (event) => {
     const cursor = event.target.result;
     if (cursor) {
-      const { id, surName, firstName, otherName, classID, sessionID } = cursor.value;
+      const { id, surName, firstName, classID, sessionID } = cursor.value;
 
       // ✅ Filter by session + class
       if (
         Number(classID) === Number(selectedClass) &&
         Number(sessionID) === Number(currentSessionID)
       ) {
-        students.push({ id, surName, firstName, otherName });
+        students.push({ id, surName, firstName });
       }
       cursor.continue();
     } else {
@@ -89,7 +89,7 @@ function loadStudentsByClass() {
       for (const s of students) {
         const option = document.createElement("option");
         option.value = s.id;
-        option.textContent = `${s.surName} ${s.firstName} ${s.otherName || ""}`;
+        option.textContent = `${s.surName} ${s.firstName}`;
         studentSelect.appendChild(option);
       }
 
