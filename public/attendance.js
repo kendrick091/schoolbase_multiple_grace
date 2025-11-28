@@ -10,7 +10,6 @@ manualInputBtn.addEventListener('click', ()=>{
 dismise.addEventListener('click', function(){
     tog(toggleFormAddForm)
 })
-
 import { DB_NAME, DB_VERSION } from "./app.js";
 
 let db;
@@ -81,8 +80,8 @@ document.getElementById("loadStudents").addEventListener("click", () => {
   const classID = Number(document.getElementById("classSelect").value);
   const term = Number(document.getElementById("termSelect").value);
 
-  const studentList = document.getElementById("studentList");
-  studentList.innerHTML = "";
+  // const studentList = document.getElementById("studentList");
+  // studentList.innerHTML = "";
 
   const tx = db.transaction("session_students", "readonly");
   const store = tx.objectStore("session_students");
@@ -105,7 +104,7 @@ document.getElementById("loadStudents").addEventListener("click", () => {
                 ${student.surName} ${student.firstName} ${student.otherName || ""}
               </label>
             `;
-            studentList.appendChild(li);
+            // studentList.appendChild(li);
           }
         };
       }
@@ -116,58 +115,58 @@ document.getElementById("loadStudents").addEventListener("click", () => {
 });
 
 // Save attendance
-document.getElementById("attendanceForm").addEventListener("submit", (e) => {
-  e.preventDefault();
+// document.getElementById("attendanceForm").addEventListener("submit", (e) => {
+//   e.preventDefault();
 
-  const sessionID = Number(document.getElementById("sessionSelect").value);
-  const classID = Number(document.getElementById("classSelect").value);
-  const term = Number(document.getElementById("termSelect").value);
+//   const sessionID = Number(document.getElementById("sessionSelect").value);
+//   const classID = Number(document.getElementById("classSelect").value);
+//   const term = Number(document.getElementById("termSelect").value);
 
-  const checkboxes = document.querySelectorAll("input[name='student']");
+//   const checkboxes = document.querySelectorAll("input[name='student']");
   
-  const tx = db.transaction("attendance", "readwrite");
-  const store = tx.objectStore("attendance");
+//   const tx = db.transaction("attendance", "readwrite");
+//   const store = tx.objectStore("attendance");
 
-  checkboxes.forEach((cb) => {
-    const studentID = Number(cb.value);
-    const present = cb.checked;
+//   checkboxes.forEach((cb) => {
+//     const studentID = Number(cb.value);
+//     const present = cb.checked;
 
-    // Check if record exists for this student/session/term
-    const index = store.index("student_session_term");
-    const getReq = index.get([studentID, sessionID, term]);
+//     // Check if record exists for this student/session/term
+//     const index = store.index("student_session_term");
+//     const getReq = index.get([studentID, sessionID, term]);
 
-    getReq.onsuccess = (event) => {
-      let record = event.target.result;
+//     getReq.onsuccess = (event) => {
+//       let record = event.target.result;
 
-      if (record) {
-        // Update existing record
-        record.totalDays += 1;
-        if (present) {
-          record.presentDays += 1;
-        } else {
-          record.absentDays += 1;
-        }
-        store.put(record);
-      } else {
-        // New record
-        store.put({
-          studentID,
-          sessionID,
-          classID,
-          term,
-          totalDays: 1,
-          presentDays: present ? 1 : 0,
-          absentDays: present ? 0 : 1
-        });
-      }
-    };
-  });
+//       if (record) {
+//         // Update existing record
+//         record.totalDays += 1;
+//         if (present) {
+//           record.presentDays += 1;
+//         } else {
+//           record.absentDays += 1;
+//         }
+//         store.put(record);
+//       } else {
+//         // New record
+//         store.put({
+//           studentID,
+//           sessionID,
+//           classID,
+//           term,
+//           totalDays: 1,
+//           presentDays: present ? 1 : 0,
+//           absentDays: present ? 0 : 1
+//         });
+//       }
+//     };
+//   });
 
-  tx.oncomplete = () => {
-    alert("Attendance saved successfully!");
-    location.reload();
-  };
-});
+//   tx.oncomplete = () => {
+//     alert("Attendance saved successfully!");
+//     location.reload();
+//   };
+// });
 
 function loadAttendanceTable(sessionID, classID, term) {
   const tbody = document.querySelector("#attendanceTable tbody");
@@ -180,32 +179,37 @@ function loadAttendanceTable(sessionID, classID, term) {
   attendanceStore.getAll().onsuccess = (e) => {
     const records = e.target.result.filter(
       (r) =>
-        String(r.sessionID) === String(sessionID) &&
-        String(r.classID) === String(classID) &&
-        String(r.term) === String(term)
+        Number(r.sessionID) === Number(sessionID) &&
+        Number(r.classID) === Number(classID) &&
+        Number(r.term) === Number(term)
     );
 
     if (records.length === 0) {
-      const row = document.createElement("tr");
-      const cell = document.createElement("td");
-      cell.colSpan = 7;
-      cell.textContent = "No attendance records found.";
-      row.appendChild(cell);
-      tbody.appendChild(row);
+      tbody.innerHTML = `
+        <tr><td colspan="4" style="text-align:center;">No attendance records found.</td></tr>
+      `;
       return;
     }
+
+    // Sort alphabetically by student name
+    records.sort((a, b) => {
+      const sA = a.studentID;
+      const sB = b.studentID;
+      return sA - sB;
+    });
 
     records.forEach((rec) => {
       const studentReq = studentStore.get(rec.studentID);
       
       studentReq.onsuccess = () => {
         const student = studentReq.result;
-        const fullName = student.firstName + ' '+ student.surName
-        let studentName = student ? fullName : `ID ${rec.studentID}`;
+        const fullName = student
+          ? `${student.surName} ${student.firstName}`
+          : `ID ${rec.studentID}`;
 
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${studentName}</td>
+          <td>${fullName}</td>
           <td>${rec.totalDays}</td>
           <td style="color: green;">${rec.presentDays}</td>
           <td style="color: red;">${rec.absentDays}</td>
