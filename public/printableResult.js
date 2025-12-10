@@ -100,7 +100,7 @@ function loadStudentInfo() {
     if (!student) return;
 
     const row = document.createElement('tr');
-    row.innerHTML = `<td>Student Name:</td><td>${student.surName} ${student.firstName} ${student.otherName}</td>`;
+    row.innerHTML = `<td>Student Name:</td><td>${student.surName} ${student.firstName}</td>`;
     studentTh.appendChild(row);
   };
 

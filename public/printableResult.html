@@ -13,13 +13,17 @@
 
   gtag('config', 'G-5284ZQD5X0');
 </script>
+<!---- scripts below for pdf ----->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!---- scripts above for pdf ----->
     <link rel="stylesheet" href="styleGpt.css">
     <link rel="stylesheet" href="attendanceEntry.css">
     <link rel="stylesheet" href="printableResult.css">
 </head>
 <body>
   
-  <div class="container">
+  <div class="container" id="resultContainer">
     <div class="schoolInfo" id="schoolLogoDiv">
     </div>
     <div class="headTableDiv">
@@ -79,6 +83,20 @@
 
     <div class="printDiv">
       <button id="printBtn" class="shiny-btn">PRINT RESULT</button>
+
+      <!-- NEW SHARE BUTTON -->
+  <!-- <button id="shareBtn" style="
+        background: #25D366;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 10px;
+        ">
+        📤 Share Result
+  </button> -->
+
       <button id="back-btn" style="
             background: #2196f3;
             color: white;
@@ -95,5 +113,50 @@
 
   <script type="module" src="printableResult.js"></script>
   <script type="module" src="app.js"></script>
+  <!-- <script>
+document.getElementById("shareBtn").addEventListener("click", async () => {
+
+  const container = document.getElementById("resultContainer");
+
+  // Capture ONLY the content inside container
+  const canvas = await html2canvas(container, {
+      scale: 2,
+      ignoreElements: (element) => {
+          return element.id === "printBtn" ||
+                 element.id === "shareBtn" ||
+                 element.id === "back-btn";
+      }
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = 210;
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pdfHeight);
+
+  const pdfBlob = pdf.output("blob");
+  const pdfFile = new File([pdfBlob], "student_result.pdf", { type: "application/pdf" });
+
+  if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+      try {
+        await navigator.share({
+          title: "Student Result",
+          text: "Here is the student's result.",
+          files: [pdfFile]
+        });
+      } catch (err) {
+        alert("Share cancelled or failed.");
+      }
+  } else {
+      alert("Sharing not supported on this device.");
+  }
+});
+</script> -->
+
 </body>
 </html>

@@ -59,9 +59,9 @@ function displayInfo() {
                 cellFirstName.textContent = firstName;
                 row.appendChild(cellFirstName);
 
-                const cellOtherName = document.createElement('td');
-                cellOtherName.textContent = otherName;
-                row.appendChild(cellOtherName);
+                // const cellOtherName = document.createElement('td');
+                // cellOtherName.textContent = otherName;
+                // row.appendChild(cellOtherName);
 
                 const cellAction = document.createElement('td');
 
