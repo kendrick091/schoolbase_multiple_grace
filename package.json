@@ -1,0 +1,28 @@
+{
+  "name": "schoolproject",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kendrick091/schoolbase_app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kendrick091/schoolbase_app/issues"
+  },
+  "homepage": "https://github.com/kendrick091/schoolbase_app#readme",
+  "description": "",
+  "dependencies": {
+    "@capacitor-community/admob": "^7.0.3",
+    "@capacitor/android": "^7.4.3",
+    "@capacitor/cli": "^7.4.3",
+    "@capacitor/core": "^7.4.3",
+    "express": "^5.1.0",
+    "socket.io": "^4.8.1"
+  }
+}

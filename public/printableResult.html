@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Base</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5284ZQD5X0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-5284ZQD5X0');
+</script>
+<!---- scripts below for pdf ----->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!---- scripts above for pdf ----->
+    <link rel="stylesheet" href="styleGpt.css">
+    <link rel="stylesheet" href="attendanceEntry.css">
+    <link rel="stylesheet" href="printableResult.css">
+</head>
+<body>
+  
+  <div class="container" id="resultContainer">
+    <div class="schoolInfo" id="schoolLogoDiv">
+    </div>
+    <div class="headTableDiv">
+      <!--- Top --- Tables ---->
+    <table>
+     <tbody id="studentTh"></tbody>
+    </table>
+    <table>
+      <tbody id="studentTh2"></tbody>
+    </table>
+    </div>
+
+    <table id="resultTable">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>CA1</th>
+        <th>CA2</th>
+        <th>CA3</th>
+        <th>Exam</th>
+        <th>Total</th>
+        <th>Grade</th>
+        <th>Remark</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+    </table>
+
+    <div class="split" style="display: flex; justify-content: space-between;">
+      <div id="resultPosition"></div>
+    <!-- <table style="width: 35%;">
+      <tr id="totalScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+
+      <tr id="averageScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+      <tr id="gradeScore"
+      style="font-size: 12px; font-weight: bolder;"></tr>
+    </table> -->
+    <div class="in-split">
+    <!-- <div id="termTitle"></div> -->
+    <p style="font-weight: bold; font-size: 12px; color: green;" id="vacationDateDisplay"></p>
+    <p style="font-weight: bold; font-size: 12px; color: blue;" id="resumptionDateDisplay"></p>
+    </div>
+    </div>
+    <div id="psychomotorDiv"></div>
+    <div>
+      <h5>Form Master's Comment: <i id="remarkfromDB"></i></h5>
+        <div>
+      <h5>Head Teacher's Comment: 
+        _______________________________________________________________________________________________</h5>
+       </div><br>
+       <h5 style="display: flex; justify-content: space-between;">Form Master's Signature: __________________________  <span style="color: white;"> 
+       </span> Head Teacher's Signature: __________________________</h5>
+    </div>
+    <div class="summary" id="summary"></div>
+
+    <div class="printDiv">
+      <button id="printBtn" class="shiny-btn">PRINT RESULT</button>
+
+      <!-- NEW SHARE BUTTON -->
+  <!-- <button id="shareBtn" style="
+        background: #25D366;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin: 10px;
+        ">
+        📤 Share Result
+  </button> -->
+
+      <button id="back-btn" style="
+            background: #2196f3;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 10px;
+            ">
+            ⬅ Back
+            </button>
+    </div>
+  </div>
+
+  <script type="module" src="printableResult.js"></script>
+  <script type="module" src="app.js"></script>
+  <!-- <script>
+document.getElementById("shareBtn").addEventListener("click", async () => {
+
+  const container = document.getElementById("resultContainer");
+
+  // Capture ONLY the content inside container
+  const canvas = await html2canvas(container, {
+      scale: 2,
+      ignoreElements: (element) => {
+          return element.id === "printBtn" ||
+                 element.id === "shareBtn" ||
+                 element.id === "back-btn";
+      }
+  });
+
+  const imgData = canvas.toDataURL("image/png");
+
+  const { jsPDF } = window.jspdf;
+  const pdf = new jsPDF("p", "mm", "a4");
+
+  const pageWidth = 210;
+  const imgProps = pdf.getImageProperties(imgData);
+  const pdfHeight = (imgProps.height * pageWidth) / imgProps.width;
+
+  pdf.addImage(imgData, "PNG", 0, 0, pageWidth, pdfHeight);
+
+  const pdfBlob = pdf.output("blob");
+  const pdfFile = new File([pdfBlob], "student_result.pdf", { type: "application/pdf" });
+
+  if (navigator.canShare && navigator.canShare({ files: [pdfFile] })) {
+      try {
+        await navigator.share({
+          title: "Student Result",
+          text: "Here is the student's result.",
+          files: [pdfFile]
+        });
+      } catch (err) {
+        alert("Share cancelled or failed.");
+      }
+  } else {
+      alert("Sharing not supported on this device.");
+  }
+});
+</script> -->
+
+</body>
+</html>

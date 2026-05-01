@@ -1,0 +1,114 @@
+body {
+      font-family: "Segoe UI", Tahoma, sans-serif;
+      margin: 0;
+      padding: 4% 2%;
+      background: #f4f7fa;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 26px;
+    }
+
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .class-select {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    select, button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    button {
+      background: #2196f3;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 600;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background: #1976d2;
+    }
+
+    .student-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    ul li{
+      list-style: none;
+    }
+
+    .student-card {
+      display: flex;
+      align-items: center;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+      font-size: 18px;
+    }
+
+    .student-card input {
+      margin-right: 12px;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 15px;
+      color: #777;
+    }
+
+    /* 📱 Mobile tweaks */
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 35px;
+      }
+      label {
+        font-size: 20px;
+      }
+      select, button {
+        font-size: 14px;
+        padding: 15px;
+      }
+      .student-card {
+        font-size: 20px;
+        padding: 12px;
+      }
+      .student-card input {
+        width: 20px;
+        height: 20px;
+      }
+    }

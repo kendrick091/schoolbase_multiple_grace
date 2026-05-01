@@ -1,0 +1,67 @@
+*{
+    padding: 1px;
+    margin: 1px;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    border: 2px solid rgba(43, 45, 77, 0.89);
+}
+
+.schoolbase{
+    background: rgba(43, 45, 77, 0.89);
+    color: whitesmoke;
+    border-radius: 14px;
+    padding: 13px;
+}
+
+.contentBody{
+    display: flex;
+    justify-content: space-between;
+}
+
+#navUl{
+    background: rgba(43, 45, 77, 0.89);
+}
+
+#navUl li{
+    width: 300px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.288);
+    border-radius: 10px;
+    list-style: none;
+    margin-top: 2px;
+}
+
+#navUl li:hover{
+    background: rgba(0, 0, 10, 0.459);
+    border-bottom: 2px solid rgb(116, 184, 77);
+    transition: 0.5s;
+}
+
+#navUl li button{
+    width: 100%;
+    padding: 4px;
+    font-size: 23px;
+    color: white;
+    background: transparent;
+    border: none;
+    font-weight: bold;
+    text-align: left;
+}
+
+.dashOptions{
+    padding: 3px;
+    border-radius: 19px;
+    border: 1px solid rgba(43, 45, 77, 0.89);
+    width: 100%;
+}
+
+.title{
+    text-align: center;
+}
+.title h2{
+    color: rgba(89, 154, 180, 0.89);
+}
+
+

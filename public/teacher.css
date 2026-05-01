@@ -1,0 +1,54 @@
+.optionSubject{
+    flex: 1;
+    padding: 30px;
+}
+
+button{
+    padding: 4px 9px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.teachersList{
+    margin-top: 20px;
+    width: 100%;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.teachersList li{
+    width: 180px;
+    background: rgba(89, 154, 180, 0.89);
+    padding: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    border-radius: 13px;
+}
+.teachersList button{
+    margin: 3px 0;
+    font-size: 12px;
+    border: none;
+    background: transparent;
+    padding: none;
+}
+
+.editDiv{
+    border: 1px solid rgba(89, 154, 180, 0.89);
+    background: rgba(89, 154, 180, 0.89);
+    border-radius: 20px;
+    padding: 17px;
+    position: absolute;
+    top: 30vh;
+    display: none;
+}
+
+.editForm input{
+    border: transparent;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}

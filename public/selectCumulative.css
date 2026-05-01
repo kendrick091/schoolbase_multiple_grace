@@ -1,0 +1,92 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-size: 16px;
+    font-family: 'Gill Sans', 'Gill Sans MT', sans-serif;
+}
+
+body{
+    background: rgb(226, 224, 224);
+    padding-top: 5%;
+}
+
+h2{
+    font-size: 25px;
+}
+
+.content{
+    padding: 12px;
+    width: 95%;
+}
+
+.con{
+    padding: 10px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+}
+
+.con:hover{
+    border-bottom: 1px solid rgba(76, 76, 155, 0.61);
+    background: rgba(179, 181, 182, 0.164);
+}
+
+label{
+    padding: 2px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+select{
+    padding: 9px;
+    border-radius: 7px;
+    width: 50%;
+}
+
+button{
+    padding: 10px;
+    background: rgba(44, 76, 124, 0.651);
+    color: white;
+    font-weight: bolder;
+    margin: 3px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+button:hover{
+    padding: 11px;
+    transition: 0.6s;
+    background: white;
+    color:rgba(44, 76, 124, 0.651);
+}
+
+@media (max-width: 570px){
+    body{
+        padding-top: 10%;
+    }
+    .content{
+        width: 100%;
+    }
+    .con{
+        width: 100%;
+    }
+
+    label{
+        color: rgba(52, 52, 100, 0.877);
+    }
+
+    select{
+        width: 60%;
+    }
+
+    .btn-con{
+        text-align: center;
+        padding: 20px;
+    }
+
+    button{
+        font-size: 16px;
+        border-radius: 5px;
+    }
+}
