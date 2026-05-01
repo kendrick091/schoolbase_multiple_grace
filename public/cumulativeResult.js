@@ -15,10 +15,7 @@ request.onsuccess = (event) => {
   renderSchoolHeaderAndFooter();
   loadStudentInfo();
   loadCumulativeResult();
-<<<<<<< HEAD
   loadPsychomotor();
-=======
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
 };
 
 // ================== SCHOOL HEADER ==================
@@ -39,7 +36,7 @@ function renderSchoolHeaderAndFooter() {
     logoImg.alt = "School Logo";
     logoImg.style.width = "100px";
 
-<<<<<<< HEAD
+
     divN.innerHTML = `
     <div>
       <h1>${school.name}</h1>
@@ -48,7 +45,6 @@ function renderSchoolHeaderAndFooter() {
     `;
 
     div.appendChild(logoImg);
-=======
     const name = document.createElement("h1");
     name.textContent = school.name;
 
@@ -58,13 +54,11 @@ function renderSchoolHeaderAndFooter() {
     div.appendChild(logoImg);
     divN.appendChild(name);
     divN.appendChild(address);
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
   };
 }
 
 // ================== STUDENT INFO ==================
 function loadStudentInfo() {
-<<<<<<< HEAD
   const tx = db.transaction(
     ["students", "classes", "session", "session_students", "attendance"],
     "readonly"
@@ -81,16 +75,14 @@ function loadStudentInfo() {
   // ======================
   // STUDENT NAME
   // ======================
-=======
+
   const tx = db.transaction(["students", "classes", "session", "session_students"], "readonly");
   const studentStore = tx.objectStore("students");
 
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
   studentStore.get(studentId).onsuccess = (e) => {
     const student = e.target.result;
     if (!student) return;
 
-<<<<<<< HEAD
     table.innerHTML = `
       <tr>
         <td class="topTableClass"><b>Name:</b></td>
@@ -226,7 +218,6 @@ mapStoreSession.onsuccess = (event) => {
         table2.appendChild(attRow);
       }
 
-=======
     const table = document.getElementById("studentInfo");
     table.innerHTML = `
       <tr><td class="topTableClass"><b>First Name:</b></td><td>${student.firstName}</td></tr>
@@ -259,7 +250,6 @@ mapStoreSession.onsuccess = (event) => {
           };
         return;
       }
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
       cursor.continue();
     }
   };
@@ -286,7 +276,6 @@ function loadCumulativeResult() {
         const result = cursor.value;
         if (result.studentID === studentId && result.session === sessionId) {
           const subjectId = result.subjectID;
-<<<<<<< HEAD
           // For the term total, while working for third term
           const ca1 = result.ca1 || 0;
           const ca2 = result.ca2 || 0;
@@ -294,14 +283,12 @@ function loadCumulativeResult() {
           const exam = result.exam || 0;
 
           const termTotal = ca1 + ca2 + ca3 + exam;
-=======
+
           const termTotal = (result.ca1 || 0) + (result.ca2 || 0) + (result.ca3 || 0) + (result.exam || 0);
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
 
           if (!resultsBySubject[subjectId]) {
             resultsBySubject[subjectId] = { subjectId, scores: {}, total: 0 };
           }
-<<<<<<< HEAD
           resultsBySubject[subjectId].scores[term.label] = {
           total: termTotal,
           ca1,
@@ -309,9 +296,7 @@ function loadCumulativeResult() {
           ca3,
           exam
         };
-=======
           resultsBySubject[subjectId].scores[term.label] = termTotal;
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
           resultsBySubject[subjectId].total += termTotal;
         }
         cursor.continue();
@@ -339,7 +324,6 @@ function renderCumulativeTable(resultsBySubject) {
       const subject = s.target.result;
       const name = subject ? subject.subjects : "Unknown";
 
-<<<<<<< HEAD
       const t1 = record.scores["1st Term"]?.total || 0;
       const t2 = record.scores["2nd Term"]?.total || 0;
       const t3Data = record.scores["3rd Term"] || {};
@@ -351,11 +335,10 @@ function renderCumulativeTable(resultsBySubject) {
       const ca3_3 = t3Data.ca3 || 0;
       const exam_3 = t3Data.exam || 0;
 
-=======
       const t1 = record.scores["1st Term"] || 0;
       const t2 = record.scores["2nd Term"] || 0;
       const t3 = record.scores["3rd Term"] || 0;
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
+
       const total = record.total;
       const avg = (total / 3).toFixed(2);
 
@@ -367,7 +350,6 @@ function renderCumulativeTable(resultsBySubject) {
         <td style="text-align: left;">${name}</td>
         <td>${t1}</td>
         <td>${t2}</td>
-<<<<<<< HEAD
         <!-- <td>${t3}</td> -->
 
         <td>${ca1_3}</td>
@@ -375,9 +357,7 @@ function renderCumulativeTable(resultsBySubject) {
         <td>${ca3_3}</td>
         <td>${exam_3}</td>
 
-=======
         <td>${t3}</td>
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
         <td>${total}</td>
         <td>${avg}</td>
         <td>${getGrade(avg)}</td>
@@ -428,7 +408,6 @@ function getRemark(score) {
   return "Fail";
 }
 
-<<<<<<< HEAD
 //code to load psychomotor data
 function loadPsychomotor() {
   const tx = db.transaction("psychomotor", "readonly");
@@ -526,9 +505,8 @@ function loadPsychomotor() {
   };
 }
 
-=======
->>>>>>> 35eea63723a0204715167da5b5544a92f6ef81a2
 // ================== PRINT ==================
 document.getElementById("printBtn").addEventListener("click", () => {
   window.print();
-});
+})
+}
