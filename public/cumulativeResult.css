@@ -10,7 +10,7 @@ body {
 
 .schooInfo{
     display: flex;
-    margin-bottom: 20px;
+    margin-bottom: 0;
 }
 
 h2{
@@ -23,7 +23,7 @@ h2{
 }
 
 .topTableClass{
-    width: 30%;
+    width: 15%;
 }
 
 table {
@@ -46,6 +46,7 @@ th {
 h2 {
     text-align: center;
 }
+
 .header, .footer {
     text-align: center;
     margin-bottom: 10px;
@@ -74,8 +75,8 @@ h2 {
 
     .schooInfo{
         display: flex;
-        margin-bottom: 16px;
-        margin-top: 15px;
+        margin-bottom: 10px;
+        margin-top: 13px;
     }
 
     #schoolNameDiv h1{
@@ -97,7 +98,7 @@ h2 {
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 15px;
+        margin-top: 7px;
     }
 
     th, td {
@@ -116,11 +117,13 @@ h2 {
     }
     .header, .footer {
         text-align: center;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
     .summary {
-        margin-top: 20px;
+        margin-top: 4px;
         font-weight: bold;
         font-size: 14px;
+        display: flex;
+        justify-content: space-between;
     }
 }

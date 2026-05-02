@@ -15,47 +15,39 @@ request.onsuccess = (event) => {
   renderSchoolHeaderAndFooter();
   loadStudentInfo();
   loadCumulativeResult();
-  loadPsychomotor();
 };
+
+
 
 // ================== SCHOOL HEADER ==================
 function renderSchoolHeaderAndFooter() {
   const tx = db.transaction("school", "readonly");
   const store = tx.objectStore("school");
-  const req = store.get(1);
 
-  req.onsuccess = () => {
-    const school = req.result;
+  store.get(1).onsuccess = (e) => {
+    const school = e.target.result;
     if (!school) return;
 
-    const div = document.getElementById("schoolLogoDiv");
-    const divN = document.getElementById("schoolNameDiv");
+    const logoDiv = document.getElementById("schoolLogoDiv");
+    const nameDiv = document.getElementById("schoolNameDiv");
 
-    const logoImg = document.createElement("img");
-    logoImg.src = URL.createObjectURL(school.logo);
-    logoImg.alt = "School Logo";
-    logoImg.style.width = "100px";
+    logoDiv.innerHTML = "";
+    nameDiv.innerHTML = "";
 
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(school.logo);
+    img.style.width = "100px";
 
-    divN.innerHTML = `
-    <div>
+    nameDiv.innerHTML = `
       <h1>${school.name}</h1>
       <h3>${school.address}</h3>
-    </div>
     `;
 
-    div.appendChild(logoImg);
-    const name = document.createElement("h1");
-    name.textContent = school.name;
-
-    const address = document.createElement("p");
-    address.textContent = school.address;
-
-    div.appendChild(logoImg);
-    divN.appendChild(name);
-    divN.appendChild(address);
+    logoDiv.appendChild(img);
   };
 }
+
+
 
 // ================== STUDENT INFO ==================
 function loadStudentInfo() {
@@ -64,196 +56,115 @@ function loadStudentInfo() {
     "readonly"
   );
 
-  const studentStore = tx.objectStore("students");
-
   const table = document.getElementById("studentInfo");
   const table2 = document.getElementById("studentInfo2");
 
   table.innerHTML = "";
   table2.innerHTML = "";
 
-  // ======================
-  // STUDENT NAME
-  // ======================
-
-  const tx = db.transaction(["students", "classes", "session", "session_students"], "readonly");
-  const studentStore = tx.objectStore("students");
-
-  studentStore.get(studentId).onsuccess = (e) => {
+  // ===== STUDENT =====
+  tx.objectStore("students").get(studentId).onsuccess = (e) => {
     const student = e.target.result;
     if (!student) return;
 
-    table.innerHTML = `
-      <tr>
-        <td class="topTableClass"><b>Name:</b></td>
-        <td>${student.surName} ${student.firstName}</td>
-      </tr>
+    table.innerHTML += `
+      <tr><td class="topTableClass"><b>Name:</b></td>
+      <td>${student.surName} ${student.firstName}</td></tr>
     `;
   };
 
-  // ======================
-  // SESSION INFO
-  // ======================
-  tx.objectStore("session").get(sessionId).onsuccess = (s) => {
-    const session = s.target.result;
+  // ===== SESSION =====
+  tx.objectStore("session").get(sessionId).onsuccess = (e) => {
+    const session = e.target.result;
     if (!session) return;
 
-    // Add session to table 1
-
     table.innerHTML += `
-      <td class="topTableClass"><b>Session:</b></td>
-      <td>${session.session}</td>
+      <tr><td class="topTableClass"><b>Session:</b></td>
+      <td>${session.session}</td></tr>
     `;
 
-    // ======================
-    // RESUMPTION DATE (table2)
-    // ======================
-
-    const termRow = document.createElement("tr");
-    termRow.innerHTML = `
-      <td class="topTableClass"><b>Term:</b></td>
-      <td>3rd Term</td>
-    `;
-
-    const vacationDate = document.createElement("tr");
-    vacationDate.innerHTML = `
-      <td class="topTableClass"><b>Vacation Date:</b></td>
-      <td>${session.thirdVac || "-"}</td>
-    `;
-    const resumptionDate = document.createElement("tr");
-    resumptionDate.innerHTML = `
-      <td class="topTableClass"><b>Resumption Date:</b></td>
-      <td>${session.thirdRes || "-"}</td>
-    `;
-
-    table2.appendChild(termRow);
-    table2.appendChild(vacationDate);
-    table2.appendChild(resumptionDate);
-  }; 
-
-  // ======================
-// CLASS INFO + STUDENT COUNT
-// ======================
-const mapStoreSession = tx.objectStore("session_students").openCursor();
-
-mapStoreSession.onsuccess = (event) => {
-  const cursor = event.target.result;
-
-  if (cursor) {
-    const rec = cursor.value;
-
-    if (rec.studentID === studentId && rec.sessionID === sessionId) {
-      const classId = rec.classID;
-
-      // ✅ Get class name
-      db.transaction("classes", "readonly")
-        .objectStore("classes")
-        .get(classId).onsuccess = (c) => {
-          const classRow = document.createElement("tr");
-          classRow.innerHTML = `
-            <td class="topTableClass"><b>Class:</b></td>
-            <td>${c.target.result.className}</td>
-          `;
-          table.appendChild(classRow);
-        };
-
-      // ======================
-      // COUNT STUDENTS IN SAME CLASS
-      // ======================
-      let studentCount = 0;
-
-      const countStore = db
-        .transaction("session_students", "readonly")
-        .objectStore("session_students")
-        .openCursor();
-
-      countStore.onsuccess = (e) => {
-        const cur = e.target.result;
-
-        if (cur) {
-          const r = cur.value;
-
-          if (r.classID === classId && r.sessionID === sessionId) {
-            studentCount++;
-          }
-
-          cur.continue();
-        } else {
-          const countRow = document.createElement("tr");
-          countRow.innerHTML = `
-            <td class="topTableClass"><b>Total Students in Class:</b></td>
-            <td>${studentCount}</td>
-          `;
-          table.appendChild(countRow);
-        }
-      };
-
-      return; // stop looping once found
-    }
-
-    cursor.continue();
-  }
-};
-  // ======================
-  // ATTENDANCE (table2)
-  // ======================
-  const attendanceStore = tx.objectStore("attendance");
-  attendanceStore.openCursor().onsuccess = (e) => {
-    const cursor = e.target.result;
-    const term = 3; // Assuming we're showing attendance for the 3rd term in the cumulative result
-
-    if (cursor) {
-      const record = cursor.value;
-
-      if (
-        record.studentID === studentId &&
-        record.sessionID === sessionId &&
-        Number(record.term) === Number(term)
-      ) {
-        const attRow = document.createElement("tr");
-        attRow.innerHTML = `
-          <td class="topTableClass"><b>Attendance:</b></td>
-          <td>${record.presentDays} / ${record.totalDays}</td>
-        `;
-        table2.appendChild(attRow);
-      }
-
-    const table = document.getElementById("studentInfo");
-    table.innerHTML = `
-      <tr><td class="topTableClass"><b>First Name:</b></td><td>${student.firstName}</td></tr>
-      <tr><td class="topTableClass"><b>Sur Name:</b></td><td>${student.surName}</td></tr>
-      <tr><td class="topTableClass"><b>Other Name:</b></td><td>${student.otherName}</td></tr>
+    table2.innerHTML += `
+      <tr><td class="topTableClass"><b>Term:</b></td><td>3rd Term</td></tr>
+      <tr><td class="topTableClass"><b>Vacation:</b></td><td>${session.thirdVac || "-"}</td></tr>
+      <tr><td class="topTableClass"><b>Resumption:</b></td><td>${session.thirdRes || "-"}</td></tr>
     `;
   };
 
-  // Session info
-  tx.objectStore("session").get(sessionId).onsuccess = (s) => {
-    const session = s.target.result;
-    const row = document.createElement("tr");
-    row.innerHTML = `<td class="topTableClass"><b>Session:</b></td><td>${session.session}</td>`;
-    document.getElementById("studentInfo").appendChild(row);
-  };
-
-  // Class info
+  // ===== CLASS + COUNT =====
   const mapStore = tx.objectStore("session_students").openCursor();
+
   mapStore.onsuccess = (event) => {
     const cursor = event.target.result;
+
     if (cursor) {
       const rec = cursor.value;
+
       if (rec.studentID === studentId && rec.sessionID === sessionId) {
-        db.transaction("classes", "readonly").objectStore("classes")
-          .get(rec.classID).onsuccess = (c) => {
-            const classRow = document.createElement("tr");
-            classRow.innerHTML = `<td class="topTableClass">
-            <b>Class:</b></td><td>${c.target.result.className}</td>`;
-            document.getElementById("studentInfo").appendChild(classRow);
+        const classId = rec.classID;
+
+        // Class name
+        db.transaction("classes", "readonly")
+          .objectStore("classes")
+          .get(classId).onsuccess = (c) => {
+            table.innerHTML += `
+              <tr><td class="topTableClass"><b>Class:</b></td>
+              <td>${c.target.result.className}</td></tr>
+            `;
           };
+
+        // Count students
+        let count = 0;
+        db.transaction("session_students", "readonly")
+          .objectStore("session_students")
+          .openCursor().onsuccess = (e) => {
+            const cur = e.target.result;
+
+            if (cur) {
+              if (cur.value.classID === classId && cur.value.sessionID === sessionId) {
+                count++;
+              }
+              cur.continue();
+            } else {
+              table.innerHTML += `
+                <tr><td class="topTableClass"><b>Total Students:</b></td>
+                <td>${count}</td></tr>
+              `;
+            }
+          };
+
         return;
       }
+
+      cursor.continue();
+    }
+  };
+
+  // ===== ATTENDANCE =====
+  const term = 3;
+
+  tx.objectStore("attendance").openCursor().onsuccess = (e) => {
+    const cursor = e.target.result;
+
+    if (cursor) {
+      const r = cursor.value;
+
+      if (
+        r.studentID === studentId &&
+        r.sessionID === sessionId &&
+        Number(r.term) === term
+      ) {
+        table2.innerHTML += `
+          <tr><td class="topTableClass"><b>Attendance:</b></td>
+          <td>${r.presentDays} / ${r.totalDays}</td></tr>
+        `;
+      }
+
       cursor.continue();
     }
   };
 }
+
+
 
 // ================== CUMULATIVE RESULT ==================
 function loadCumulativeResult() {
@@ -263,131 +174,125 @@ function loadCumulativeResult() {
     { store: "thirdTerm", label: "3rd Term" }
   ];
 
-  const resultsBySubject = {};
-  let completedTerms = 0;
+  const results = {};
+  let done = 0;
 
   terms.forEach(term => {
-    const tx = db.transaction(term.store, "readonly");
-    const store = tx.objectStore(term.store);
+    db.transaction(term.store, "readonly")
+      .objectStore(term.store)
+      .openCursor().onsuccess = (e) => {
+        const cursor = e.target.result;
 
-    store.openCursor().onsuccess = (event) => {
-      const cursor = event.target.result;
-      if (cursor) {
-        const result = cursor.value;
-        if (result.studentID === studentId && result.session === sessionId) {
-          const subjectId = result.subjectID;
-          // For the term total, while working for third term
-          const ca1 = result.ca1 || 0;
-          const ca2 = result.ca2 || 0;
-          const ca3 = result.ca3 || 0;
-          const exam = result.exam || 0;
+        if (cursor) {
+          const r = cursor.value;
 
-          const termTotal = ca1 + ca2 + ca3 + exam;
+          if (r.studentID === studentId && r.session === sessionId) {
+            const subjectId = r.subjectID;
 
-          const termTotal = (result.ca1 || 0) + (result.ca2 || 0) + (result.ca3 || 0) + (result.exam || 0);
+            const total =
+              (r.ca1 || 0) +
+              (r.ca2 || 0) +
+              (r.ca3 || 0) +
+              (r.exam || 0);
 
-          if (!resultsBySubject[subjectId]) {
-            resultsBySubject[subjectId] = { subjectId, scores: {}, total: 0 };
+            if (!results[subjectId]) {
+              results[subjectId] = {
+                subjectId,
+                scores: {},
+                total: 0
+              };
+            }
+
+            results[subjectId].scores[term.label] = {
+              total,
+              ca1: r.ca1 || 0,
+              ca2: r.ca2 || 0,
+              ca3: r.ca3 || 0,
+              exam: r.exam || 0
+            };
+
+            results[subjectId].total += total;
           }
-          resultsBySubject[subjectId].scores[term.label] = {
-          total: termTotal,
-          ca1,
-          ca2,
-          ca3,
-          exam
-        };
-          resultsBySubject[subjectId].scores[term.label] = termTotal;
-          resultsBySubject[subjectId].total += termTotal;
+
+          cursor.continue();
+        } else {
+          done++;
+          if (done === terms.length) {
+            renderCumulativeTable(results);
+          }
         }
-        cursor.continue();
-      } else {
-        completedTerms++;
-        if (completedTerms === terms.length) {
-          renderCumulativeTable(resultsBySubject);
-        }
-      }
-    };
+      };
   });
 }
 
-function renderCumulativeTable(resultsBySubject) {
-  const tableBody = document.querySelector("#cumulativeTable tbody");
-  tableBody.innerHTML = "";
+
+
+function renderCumulativeTable(results) {
+  const tbody = document.querySelector("#cumulativeTable tbody");
+  tbody.innerHTML = "";
 
   let grandTotal = 0;
-  let subjectCount = 0;
+  let count = 0;
 
   const subjectStore = db.transaction("subjectStore", "readonly").objectStore("subjectStore");
 
-  Object.values(resultsBySubject).forEach(record => {
-    subjectStore.get(record.subjectId).onsuccess = (s) => {
-      const subject = s.target.result;
-      const name = subject ? subject.subjects : "Unknown";
+  Object.values(results).forEach(r => {
+    subjectStore.get(r.subjectId).onsuccess = (s) => {
+      const name = s.target.result?.subjects || "Unknown";
 
-      const t1 = record.scores["1st Term"]?.total || 0;
-      const t2 = record.scores["2nd Term"]?.total || 0;
-      const t3Data = record.scores["3rd Term"] || {};
+      const t1 = r.scores["1st Term"]?.total || 0;
+      const t2 = r.scores["2nd Term"]?.total || 0;
+      const t3 = r.scores["3rd Term"] || {};
 
-      // For third term, we need to extract CA and Exam separately for better display
-      const t3 = t3Data.total || 0;
-      const ca1_3 = t3Data.ca1 || 0;
-      const ca2_3 = t3Data.ca2 || 0;
-      const ca3_3 = t3Data.ca3 || 0;
-      const exam_3 = t3Data.exam || 0;
-
-      const t1 = record.scores["1st Term"] || 0;
-      const t2 = record.scores["2nd Term"] || 0;
-      const t3 = record.scores["3rd Term"] || 0;
-
-      const total = record.total;
+      const total = r.total;
       const avg = (total / 3).toFixed(2);
 
       grandTotal += total;
-      subjectCount++;
+      count++;
 
       const row = document.createElement("tr");
+
       row.innerHTML = `
-        <td style="text-align: left;">${name}</td>
+        <td>${name}</td>
         <td>${t1}</td>
         <td>${t2}</td>
-        <!-- <td>${t3}</td> -->
 
-        <td>${ca1_3}</td>
-        <td>${ca2_3}</td>
-        <td>${ca3_3}</td>
-        <td>${exam_3}</td>
+        <td>${t3.ca1 || 0}</td>
+        <td>${t3.ca2 || 0}</td>
+        <td>${t3.ca3 || 0}</td>
+        <td>${t3.exam || 0}</td>
 
-        <td>${t3}</td>
+        <td>${t3.total || 0}</td>
         <td>${total}</td>
         <td>${avg}</td>
         <td>${getGrade(avg)}</td>
         <td>${getRemark(avg)}</td>
       `;
-      tableBody.appendChild(row);
-    };
-  });
 
-
+      tbody.appendChild(row);
+    }
+    });
 
   setTimeout(() => {
-    if (subjectCount > 0) {
-      const avg = (grandTotal / (subjectCount * 3)).toFixed(2);
-      let status = function(){
-        if (avg >= 45){
-          return `<h3 style="color: green;">PROMOTED</h3>`
-        }else{
-          return `<h3 style="color: red;">Advise to Repeat</h3>`
-        }
-      }
+    if (count > 0) {
+      const avg = (grandTotal / (count * 3)).toFixed(2);
+
       document.getElementById("cumulativeSummary").innerHTML = `
-        Grand Total: ${grandTotal} | Average: ${avg} | Grade: ${getGrade(avg)}
-        <div>${status()}</div>
+      <div>
+        Grand Total: ${grandTotal} |
+        Average: ${avg} |
+        Grade: ${getGrade(avg)}
+        </div>
+        <div style="color:${avg >= 45 ? "green" : "red"}">
+          ${avg >= 45 ? "PROMOTED" : "REPEAT"}
+        </div>
       `;
     }
-  }, 500);
-}
+  }, 300);
 
-// ================== GRADING HELPERS ==================
+
+
+// ================== HELPERS ==================
 function getGrade(score) {
   score = Number(score);
   if (score >= 70) return "A";
@@ -504,9 +409,10 @@ function loadPsychomotor() {
     console.error("Error loading psychomotor data.");
   };
 }
+loadPsychomotor();
+}
 
 // ================== PRINT ==================
 document.getElementById("printBtn").addEventListener("click", () => {
   window.print();
 })
-}
