@@ -17,8 +17,6 @@ request.onsuccess = (event) => {
   loadCumulativeResult();
 };
 
-
-
 // ================== SCHOOL HEADER ==================
 function renderSchoolHeaderAndFooter() {
   const tx = db.transaction("school", "readonly");

@@ -11,4 +11,4 @@ function showSuccessContent() {
   successContent.style.display = "block";
 }
 
-showErrContent()
+showSuccessContent()
