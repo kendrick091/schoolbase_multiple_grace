@@ -243,7 +243,15 @@ function renderCumulativeTable(results) {
       const t3 = r.scores["3rd Term"] || {};
 
       const total = r.total;
-      const avg = (total / 3).toFixed(2);
+
+    // Count only available terms
+    const termsAvailable = [
+        r.scores["1st Term"],
+        r.scores["2nd Term"],
+        r.scores["3rd Term"]
+    ].filter(Boolean).length;
+
+    const avg = (total / termsAvailable).toFixed(2);
 
       grandTotal += total;
       count++;
@@ -273,7 +281,17 @@ function renderCumulativeTable(results) {
 
   setTimeout(() => {
     if (count > 0) {
-      const avg = (grandTotal / (count * 3)).toFixed(2);
+      let totalTerms = 0;
+
+      Object.values(results).forEach(r => {
+          totalTerms += [
+              r.scores["1st Term"],
+              r.scores["2nd Term"],
+              r.scores["3rd Term"]
+          ].filter(Boolean).length;
+      });
+
+      const avg = (grandTotal / totalTerms).toFixed(2);
 
       document.getElementById("cumulativeSummary").innerHTML = `
       <div>
