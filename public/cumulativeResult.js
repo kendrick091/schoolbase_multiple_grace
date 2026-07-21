@@ -15,6 +15,7 @@ request.onsuccess = (event) => {
   renderSchoolHeaderAndFooter();
   loadStudentInfo();
   loadCumulativeResult();
+  remarkDisplay()
 };
 
 // ================== SCHOOL HEADER ==================
@@ -426,6 +427,23 @@ function loadPsychomotor() {
   };
 }
 loadPsychomotor();
+}
+
+function remarkDisplay(){
+  const tx = db.transaction('remark', 'readonly');
+  const store = tx.objectStore('remark');
+  let term = 3;
+  const secretKey = `${String(studentId)}_${String(sessionId)}_${String(term)}`;
+
+  const getStudentRemark = store.get(secretKey);
+
+  getStudentRemark.onsuccess = () =>{
+    const cursor = getStudentRemark.result;
+
+    document.getElementById('remarkfromDB')
+    .textContent = `${cursor.remark}`
+  }
+
 }
 
 // ================== PRINT ==================

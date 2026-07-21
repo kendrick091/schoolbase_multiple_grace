@@ -431,54 +431,6 @@ function getPositionSuffix(pos) {
   return "th";
 }
 
-//display vacation and resumption dates
-// function loadTermInfo() {
-//   const tx = db.transaction("session", "readonly");
-//   const store = tx.objectStore("session");
-//   const req = store.get(sessionId);
-
-//   req.onsuccess = (event) => {
-//     const record = event.target.result;
-
-//     const vac = document.getElementById("vacationDateDisplay");
-//     const res = document.getElementById("resumptionDateDisplay");
-//     const title = document.getElementById("termTitle");
-
-//     if (!record) {
-//       title.textContent = "No session record found.";
-//       vac.textContent = "-";
-//       res.textContent = "-";
-//       return;
-//     }
-
-//     // Choose correct term info
-//     let vacDate = "-";
-//     let resDate = "-";
-//     let termName = "";
-
-//     if (term === 1) {
-//       vacDate = record.firstVac || "-";
-//       resDate = record.firstRes || "-";
-//       termName = "First Term";
-//     } else if (term === 2) {
-//       vacDate = record.secondVac || "-";
-//       resDate = record.secondRes || "-";
-//       termName = "Second Term";
-//     } else if (term === 3) {
-//       vacDate = record.thirdVac || "-";
-//       resDate = record.thirdRes || "-";
-//       termName = "Third Term";
-//     }
-
-//     // title.textContent = `${termName} `;
-//     vac.textContent = `Vacation Date: ${vacDate}`;
-//     res.textContent = `Next Term Begins: ${resDate}`;
-//   };
-
-//   req.onerror = () => {
-//     console.error("Error loading session record.");
-//   };
-// }
 
 //Print btn ======= ---=
 document.getElementById('printBtn').addEventListener('click', ()=>{
